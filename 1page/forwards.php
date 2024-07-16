@@ -53,8 +53,6 @@ if (!isset($_SESSION['user_id'])) {
                     <br>
 
                     <hr class="wp-block-separator sep-line is-style-wide">
-
-
                     <form action="../social/upload.php" method="post" enctype="multipart/form-data">
 
                         <?php if (isset($_SESSION['success'])) { ?>
