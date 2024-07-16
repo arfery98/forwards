@@ -36,10 +36,10 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                 <hr>
                 <center>
                     <?php if (isset($_SESSION['user_id'])) { ?>
-                        ใส่รูปภาพ
 
+                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" height="180" class="d-inline-block align-text-middle rounded-circle">
                     <?php } else { ?>
-                        <img src="file:///C:/Downloads/songtor-Photoroom.png" alt="" height="180" class="d-inline-block align-text-middle">
+                        <img src="file:///C:/Downloads/songtor-Photoroom.png" alt="" height="180" class="d-inline-block align-text-middle rounded-circle">
                     <?php } ?>
                 </center>
                 <hr>

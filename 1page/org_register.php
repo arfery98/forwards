@@ -67,7 +67,7 @@ if (!isset($_SESSION['user_id'])) {
                             <br>
                             <hr>
                             <div class="d-grid gap-2 col-3 mx-auto">
-                                <button class="btn btn-primary rounded-pill" type="submit" name="org_register">สมัครบัญชีโครงการ</button>
+                                <button class="btn btn-primary rounded-pill" type="submit" name="org_register">สมัครบัญชีองค์กร</button>
                             </div>
                         </div>
                     </form>

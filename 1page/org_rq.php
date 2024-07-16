@@ -26,14 +26,12 @@ if (!isset($_SESSION['user_id'])) {
     } ?>
 </head>
 
-
-
 <!-- FOR -->
 
 <!-- NAME-->
 
 <body style="background-color: #dfeefa;">
-    <img alt="..." class="d-block w-100" src="../image/fw_cvover.jpg">
+    <img alt="..." class="d-block w-100" src="../image/rq_fw.jpg">
     <br>
     <div class="container">
         <div class="carousel-inner">
@@ -45,8 +43,7 @@ if (!isset($_SESSION['user_id'])) {
                     <div class="text-center">
                         <h3 class="gb-headline gb-headline-eba9dd47"> FORWARD </h3>
                         <p>
-                            <span class="has-inline-color has-white-color">หากมีความสนใจเรื่อง การส่งต่อ,
-                                บริจาคสิ่งของ &nbsp; สามารถกรอกฟอร์มด้านล่าง
+                            <span class="has-inline-color has-white-color">กรอกข้อมูลสิ่งของที่ต้อง ด้านล่าง
                             </span>
                         </p>
                     </div>
@@ -76,20 +73,20 @@ if (!isset($_SESSION['user_id'])) {
                         <div class="row">
                             <div class="col-md-12 mb-3">
                                 <label for="Email" class="form-label">
-                                    สิ่งของที่ต้องการบริจาค
+                                    สิ่งของที่ต้องการ
                                 </label>
                                 <input type="text" class="form-control" style="height:40px;" name="personal_forward_name" required="">
                             </div>
 
                             <div class="col-md-12 mb-3">
                                 <label for="Message" class="form-label">
-                                    รายละเอียด
+                                    เหตุผล
                                 </label>
                                 <textarea class="form-control" rows="3" name="personal_forward_detail"></textarea>
                             </div>
 
                             <div class="text-center">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">อัพโหลดรูปภาพสิ่งของ</h1>
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">อัพโหลดรูปภาพ</h1>
                             </div>
                             <div class="modal-body">
                                 <style>
@@ -169,7 +166,7 @@ if (!isset($_SESSION['user_id'])) {
 
                         <div class="col-md-12 mb-3">
                             <label for="Services" class="form-label">
-                                หมวดหมู่ที่บริจาค
+                                หมวดหมู่ที่ขอรับการบริจาค
                             </label>
                             <select class="form-select style=" height:40px; name="personal_forward_catagories_id" required="">
                                 <option selected="" value="" disabled="">โปรดเลือก</option>
@@ -181,8 +178,7 @@ if (!isset($_SESSION['user_id'])) {
                                 <option value="อื่นๆ">อื่นๆ</option>
                             </select>
                         </div>
-                        <label for="ad" class="form-label">ที่อยู่</label>
-                        <hr>
+
                         <div class="row">
                             <div class="col">
                                 <label for="formGroupExampleInput" class="form-label">บ้านเลขที่</label>
@@ -242,7 +238,6 @@ if (!isset($_SESSION['user_id'])) {
                                 <input type="text" class="form-control" id="zipcode" name="zipcode" readonly>
                                 <br>
                             </div>
-                            </label>
 
 
 

@@ -40,10 +40,11 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                         <?= $userData['user_profile']; ?>
 
                     <?php } else { ?>
-                        <img src="<?= $userData['user_profile'];  ?>" alt="200" height="200" class="d-inline-block align-text-middle">
+                        <img src="<?= $userData['user_profile'];  ?>" alt="200" height="200" class="d-inline-block align-text-middle rounded-circle">
                     <?php } ?>
                     <br>
                     <form class="imgForm" action="../user/img_pf.php" method="post" enctype="multipart/form-data">
+                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" height="180" class="d-inline-block align-text-middle rounded-circle">
 
                         <div class="text-center">
                             <button type="button" class="btn btn-outline-success rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -318,8 +319,8 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                     <br>
                     <div class="row text-end">
                         <div class="col">
-                            <a href="edit_profile.php" type="button" class="btn btn-danger">ยกเลิก</a>
-                            <button type="submit" class="btn btn-primary">แก้ไขข้อมูล</button>
+                            <a href="edit_profile.php" type="button" class="btn btn-danger rounded-pill">ยกเลิก</a>
+                            <button type="submit" class="btn btn-primary rounded-pill">แก้ไขข้อมูล</button>
                         </div>
 
                     </div>

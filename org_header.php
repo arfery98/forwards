@@ -23,7 +23,7 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link " href="#" role="button" aria-expanded="false">
+                        <a class="nav-link " href="../1page/org_rq.php" role="button" aria-expanded="false">
                             ขอรับบริจาค
                         </a>
                     </li>
@@ -51,7 +51,7 @@
             <?php if (isset($_SESSION['organization_name'])) { ?>
 
                 <span class="navbar-text">
-                    ยินดีต้องรับโครงการ <?php echo $_SESSION['organization_name']; ?>
+                    ยินดีต้องรับมูลนิธิ <?php echo "บ้านนกขมิ้น" /*$_SESSION['organization_name']; */?>
                 </span>
                 &nbsp;
                 <a class="btn btn-outline-danger rounded-pill" href="../user/org_logout.php" type="submit">ออกจากระบบ</a>
