@@ -2,6 +2,8 @@
 require('../db.php');
 session_start();
 
+echo "test";
+
 /*   test__________________________1
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -34,11 +36,12 @@ if ($userData) {
         echo "รหัสผ่านเดิมไม่ถูกต้อง";
     }
 }*/
-
-if (isset($_SESSION['user_id']) && isset($_SESSION['user_name'])) {
+print_r($_POST);
+//if (isset($_SESSION['user_id']) && isset($_SESSION['user_name'])) {
 
     //include "db_conn.php";
 
+    /* 
     if (isset($_POST['user_password']) && isset($_POST['user_new_pass']) && isset($_POST['user_checkpass'])) {
 
         function validate($data)
@@ -71,8 +74,8 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_name'])) {
             //$user_password = md5($user_password);
             //$user_new_pass = md5($user_new_pass);
 
-            $stmt = $conn->prepare("SELECT * FROM tb_users WHERE user_password= :user_password");
-            $stmt->bindParam(":user_password", $user_password);
+            $stmt = $conn->prepare("SELECT * FROM tb_users WHERE user_id = :user_id");
+            $stmt->bindParam(":user_id", $user_id);
             $stmt->execute();
             $userData = $stmt->fetch(PDO::FETCH_ASSOC); //mysqli_query($conn, $sql);
             //$userData = $rows['user_password'];
@@ -84,13 +87,13 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_name'])) {
                     $hashed_password = password_hash($user_new_pass, PASSWORD_DEFAULT);
 
                     // รหัสผ่านใหม่ในฐานข้อมูล
-                    $sql_update = $conn->prepare("UPDATE tb_users SET password = :hashed_password WHERE id = :user_id");
+                    $stmt_update = $conn->prepare("UPDATE tb_users SET password = :hashed_password WHERE user_id = :user_id");
                     //$stmt_update = $pdo->prepare($sql_update);
                     $stmt_update->bindParam(':hashed_password', $hashed_password, PDO::PARAM_STR);
                     $stmt_update->bindParam(':user_id', $user_id, PDO::PARAM_INT);
                     $stmt_update->execute();
 
-                    header("Location: change_pass.php");
+                    header("Location: ../1page/change_pass.php");
                     echo "success=Your password has been changed successfully";
                     exit();
                 } else {
@@ -104,11 +107,11 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_name'])) {
                 header("Location: ../1page/change_pass.php");
                 echo "error=User not found";
                 exit();
-            }*/
+            }
         }
     } else {
         // ถ้าไม่มีการส่งข้อมูลแบบ POST
         header("Location: ../1page/change_pass.php");
         exit();
-    }
-}
+    } */
+//}

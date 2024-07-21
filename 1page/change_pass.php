@@ -72,7 +72,7 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                         <div class="row text-end">
                             <div class="col">
                                 <a href="change_pass.php" type="button" class="btn btn-danger rounded-pill">ยกเลิก</a>
-                                <button type="POST" class="btn btn-primary rounded-pill">แก้ไขรหัสผ่าน</button>
+                                <button type="submit" class="btn btn-primary rounded-pill">แก้ไขรหัสผ่าน</button>
                             </div>
                         </div>
                     </div>
