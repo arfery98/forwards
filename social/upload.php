@@ -1,6 +1,7 @@
 <?php
 session_start();
 include('../db_connect.php');
+include('../db.php');
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../user/login.php");
@@ -121,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['organization-forwards'
     $rows = $stmt1->fetch(PDO::FETCH_ASSOC);
     $user_ad_districts_name = $rows['name_th'];
 
-    $organization_forward_ad_zipcode = $_POST['no'];
+    $organization_forward_ad_zipcode = $_POST['zipcode'];
     $organization_forward_status = 'Open';
 
     if (isset($_FILES['images'])) {
