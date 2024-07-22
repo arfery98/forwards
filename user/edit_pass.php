@@ -3,11 +3,7 @@ require('../db.php');
 session_start();
 
 if (isset($_SESSION['user_id']) && isset($_SESSION['user_name'])) {
-
-    print_r($_POST);
-
-    //include "db_conn.php";
-
+    
     if (isset($_POST['user_password']) && isset($_POST['user_new_pass']) && isset($_POST['user_checkpass'])) {
 
         function validate($data)
