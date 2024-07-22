@@ -13,7 +13,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['Personal-forwards'])) 
     $personal_forward_name = $_POST['personal_forward_name'];
     $personal_forward_detail = $_POST['personal_forward_detail'];
     $personal_forward_catagories_id = $_POST['personal_forward_catagories_id'];
-    $personal_forward_location = $_POST['personal_forward_location'];
+    //$personal_forward_location = $_POST['personal_forward_location'];
+    $personal_forward_ad_no = $_POST['no'];
+    $personal_forward_ad_village = $_POST['village'];
+    $personal_forward_ad_groubs = $_POST['groubs'];
+    $personal_forward_ad_buildings = $_POST['buildings'];
+    $personal_forward_ad_alleys = $_POST['alleys'];
+    $personal_forward_ad_roads = $_POST['roads'];
+    $personal_forward_ad_provinces = $_POST['provinces'];
+    $personal_forward_ad_amphures = $_POST['amphures'];
+    $personal_forward_ad_districts = $_POST['districts'];
+
+    $stmt1 = $conn->prepare("SELECT * FROM districts WHERE id = :id");
+    $stmt1->bindParam(':id', $user_ad_districts);
+    $stmt1->execute();
+    $rows = $stmt1->fetch(PDO::FETCH_ASSOC);
+    $user_ad_districts_name = $rows['name_th'];
+
+    $personal_forward_ad_zipcode = $_POST['zipcode'];
     $personal_forward_status = 'Open';
 
 
@@ -59,9 +76,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['Personal-forwards'])) 
             $personal_forward_img = json_encode($image_paths);
 
             //echo $personal_forward_img;
-            
+
             //  สร้างตัวแปร เพื่อเก็บภาษา sql
-            $sql = "INSERT INTO tb_personal_forward(personal_forward_user,personal_forward_name,personal_forward_detail,personal_forward_img,personal_forward_catagories_id,personal_forward_location,personal_forward_status) VALUES ('$user_id','$personal_forward_name','$personal_forward_detail','$personal_forward_img','$personal_forward_catagories_id','$personal_forward_location','$personal_forward_status')";
+            $sql = "INSERT INTO tb_personal_forward(personal_forward_user,personal_forward_name,personal_forward_detail,personal_forward_img,personal_forward_catagories_id,`personal_forward_ad_no`, `personal_forward_ad_village`, `personal_forward_ad_groubs`, `personal_forward_ad_buildings`, `personal_forward_ad_alleys`, `personal_forward_ad_roads`, `personal_forward_ad_provinces`, `personal_forward_ad_amphures`, `personal_forward_ad_districts`, `personal_forward_ad_zipcode`,personal_forward_status) 
+            VALUES ('$user_id','$personal_forward_name','$personal_forward_detail','$personal_forward_img','$personal_forward_catagories_id','$personal_forward_ad_no','$personal_forward_ad_village','$personal_forward_ad_groubs','$personal_forward_ad_buildings','$personal_forward_ad_alleys','$personal_forward_ad_roads','$personal_forward_ad_provinces','$personal_forward_ad_amphures','$personal_forward_ad_districts','$personal_forward_ad_zipcode','$personal_forward_status')";
             $result = mysqli_query($con, $sql);
             if ($result) {
                 $_SESSION['success'] = "โพสต์บริจาคเรียบร้อย!";
@@ -86,7 +104,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['organization-forwards'
     $organization_forward_name = $_POST['personal_forward_name'];
     $organization_forward_detail = $_POST['personal_forward_detail'];
     $organization_forward_catagories_id = $_POST['personal_forward_catagories_id'];
-    $organization_forward_location = $_POST['personal_forward_location'];
+    //$organization_forward_location = $_POST['personal_forward_location'];
+    $organization_forward_ad_no = $_POST['no'];
+    $organization_forward_advillage = $_POST['village'];
+    $organization_forward_ad_groubs = $_POST['groubs'];
+    $organization_forward_ad_buildings = $_POST['buildings'];
+    $organization_forward_ad_alleys = $_POST['alleys'];
+    $organization_forward_ad_roads = $_POST['roads'];
+    $organization_forward_ad_provinces = $_POST['provinces'];
+    $organization_forward_ad_amphures = $_POST['amphures'];
+    $organization_forward_ad_districts = $_POST['districts'];
+
+    $stmt1 = $conn->prepare("SELECT * FROM districts WHERE id = :id");
+    $stmt1->bindParam(':id', $user_ad_districts);
+    $stmt1->execute();
+    $rows = $stmt1->fetch(PDO::FETCH_ASSOC);
+    $user_ad_districts_name = $rows['name_th'];
+
+    $organization_forward_ad_zipcode = $_POST['no'];
     $organization_forward_status = 'Open';
 
     if (isset($_FILES['images'])) {
@@ -128,7 +163,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['organization-forwards'
         if (!empty($image_paths)) {
             $organization_forward_img = json_encode($image_paths);
 
-            $sql = "INSERT INTO tb_organization_forwards (organization_forward_user, organization_forward_name, organization_forward_detail, organization_forward_img, organization_forward_catagories_id, organization_forward_location, organization_forward_status) VALUES ('$organization_name','$organization_forward_name','$organization_forward_detail','$organization_forward_img','$organization_forward_catagories_id','$organization_forward_location','$organization_forward_status')";
+            $sql = "INSERT INTO tb_organization_forwards (organization_forward_user, organization_forward_name, organization_forward_detail, organization_forward_img, organization_forward_catagories_id, `personal_forward_ad_no`, `personal_forward_ad_village`, `personal_forward_ad_groubs`, `personal_forward_ad_buildings`, `personal_forward_ad_alleys`, `personal_forward_ad_roads`, `personal_forward_ad_provinces`, `personal_forward_ad_amphures`, `personal_forward_ad_districts`, `personal_forward_ad_zipcode`, organization_forward_status) 
+            VALUES ('$organization_name','$organization_forward_name','$organization_forward_detail','$organization_forward_img','$organization_forward_catagories_id','$personal_forward_ad_no','$personal_forward_ad_village','$personal_forward_ad_groubs','$personal_forward_ad_buildings','$personal_forward_ad_alleys','$personal_forward_ad_roads','$personal_forward_ad_provinces','$personal_forward_ad_amphures','$personal_forward_ad_districts','$personal_forward_ad_zipcode','$organization_forward_status')";
             $result = mysqli_query($con, $sql);
 
             if ($result) {

@@ -113,55 +113,7 @@ if (!isset($_SESSION['user_id'])) {
                                     </div>
                                 </div>
                                 <br>
-                                <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-                                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-                                <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
-                                <script>
-                                    $("body").on("change", "#browse_image", function(e) {
-                                        var files = e.target.files;
-                                        var done = function(url) {
-                                            $('#display_image_div').html('');
-                                            $("#display_image_div").html('<img name="display_image_data" id="display_image_data" src="' + url + '" alt="Uploaded Picture">');
 
-                                        };
-                                        if (files && files.length > 0) {
-                                            file = files[0];
-
-                                            if (URL) {
-                                                done(URL.createObjectURL(file));
-                                            } else if (FileReader) {
-                                                reader = new FileReader();
-                                                reader.onload = function(e) {
-                                                    done(reader.result);
-                                                };
-                                                reader.readAsDataURL(file);
-                                            }
-                                        }
-                                        button.onclick = function() {
-
-                                            var croppedCanvas;
-                                            var roundedCanvas;
-                                            var roundedImage;
-
-                                            if (!croppable) {
-                                                return;
-                                            }
-
-                                            // Crop
-                                            croppedCanvas = cropper.getCroppedCanvas();
-
-                                            // Round
-                                            roundedCanvas = getRoundedCanvas(croppedCanvas);
-
-                                            // Show
-                                            roundedImage = document.createElement('img');
-
-                                            roundedImage.src = roundedCanvas.toDataURL()
-                                            result.innerHTML = '';
-                                            result.appendChild(roundedImage);
-                                        };
-                                    });
-                                </script>
                             </div>
                         </div>
 
@@ -266,6 +218,108 @@ if (!isset($_SESSION['user_id'])) {
                                 <button type="submit" <?php if (isset($_SESSION['organization_name'])) { ?> name="organization-forwards" ; <?php } else { ?> name="Personal-forwards" ; <?php } ?> id="submitButton" class="btn btn-warning rounded-pill">ส่งต่อ</button>
                             </div>
                     </form>
+
+                    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+                    <script>
+                        $("body").on("change", "#browse_image", function(e) {
+                            var files = e.target.files;
+                            var done = function(url) {
+                                $('#display_image_div').html('');
+                                $("#display_image_div").html('<img name="display_image_data" id="display_image_data" src="' + url + '" alt="Uploaded Picture">');
+
+                            };
+                            if (files && files.length > 0) {
+                                file = files[0];
+
+                                if (URL) {
+                                    done(URL.createObjectURL(file));
+                                } else if (FileReader) {
+                                    reader = new FileReader();
+                                    reader.onload = function(e) {
+                                        done(reader.result);
+                                    };
+                                    reader.readAsDataURL(file);
+                                }
+                            }
+                            button.onclick = function() {
+
+                                var croppedCanvas;
+                                var roundedCanvas;
+                                var roundedImage;
+
+                                if (!croppable) {
+                                    return;
+                                }
+
+                                // Crop
+                                croppedCanvas = cropper.getCroppedCanvas();
+
+                                // Round
+                                roundedCanvas = getRoundedCanvas(croppedCanvas);
+
+                                // Show
+                                roundedImage = document.createElement('img');
+
+                                roundedImage.src = roundedCanvas.toDataURL()
+                                result.innerHTML = '';
+                                result.appendChild(roundedImage);
+                            };
+                        });
+                    </script>
+
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+                    <script type="text/javascript">
+                        $('#provinces').change(function() {
+                            var province_id = $(this).val();
+                            $.ajax({
+                                type: "POST",
+                                url: "../address/get_amphures.php",
+                                data: {
+                                    province_id: province_id,
+                                    function: 'province_id'
+                                },
+                                success: function(data) {
+                                    console.log(data);
+                                    $('#amphures').html(data)
+                                    $('#district').html('');
+                                    $('#zipcode').val('');
+                                }
+                            });
+                        });
+                        $('#amphures').change(function() {
+                            var amphures_id = $(this).val();
+                            $.ajax({
+                                url: "../address/get_districts.php",
+                                method: "POST",
+                                data: {
+                                    amphures_id: amphures_id,
+                                    function: 'amphures'
+                                },
+                                success: function(data) {
+                                    $('#district').html(data);
+                                    $('#zipcode').val('');
+                                }
+                            });
+                        });
+                        $('#district').change(function() {
+                            var district_id = $(this).val();
+                            $.ajax({
+                                url: "../address/get_zipcode.php",
+                                method: "POST",
+                                data: {
+                                    district_id: district_id,
+                                    function: 'district'
+                                },
+                                success: function(data) {
+                                    console.log(data);
+                                    $('#zipcode').val(data);
+                                }
+                            });
+                        });
+                    </script>
+
 
                 </div>
 
