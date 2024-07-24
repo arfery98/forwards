@@ -36,15 +36,37 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                 <p class="fs-3">แก้ไขข้อมูลส่วนตัว</p>
                 <hr>
                 <center>
-                    <?php if (isset($_SESSION['user_id'])) { ?>
-                        <?= $userData['user_profile']; ?>
+                    <?php if (isset($_SESSION['user_profile'])) { ?>
+                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" height="180" class="d-inline-block align-text-middle rounded-circle">
 
                     <?php } else { ?>
-                        <img src="<?= $userData['user_profile'];  ?>" alt="200" height="200" class="d-inline-block align-text-middle rounded-circle">
-                    <?php } ?>
+                        <?php $images = json_decode($userData['user_profile'], true);
+                        if (is_array($images)) {
+                            foreach ($images as $image) { ?>
+                                <?php echo "<img src='../user/{$image}' alt='' height='180'f class='d-inline-block align-text-middle rounded-circle'>" ?>
+                            <?php } ?>
+                    <?php }
+                    } ?>
                     <br>
                     <form class="imgForm" action="../user/img_pf.php" method="post" enctype="multipart/form-data">
-                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" height="180" class="d-inline-block align-text-middle rounded-circle">
+
+                        <?php if (isset($_SESSION['success'])) { ?>
+
+                            <div class="alert alert-success" role="alert">
+                                <?php
+                                echo $_SESSION['success'];
+                                unset($_SESSION['success']);
+                                ?>
+                            </div>
+                        <?php }; ?>
+
+                        <?php if (isset($_SESSION['error'])) { ?>
+                            <div class="alert alert-danger" role="alert">
+                                <?php echo $_SESSION['error'];
+                                unset($_SESSION['error']);
+                                ?>
+                            </div>
+                        <?php }; ?>
 
                         <div class="text-center">
                             <button type="button" class="btn btn-outline-success rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -72,7 +94,7 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                                                     </div>
                                                     <input type="hidden" name="cropped_image_data" id="cropped_image_data">
                                                     <br>
-                                                    <input type="file" name="browse_image" id="browse_image" class="form-control">
+                                                    <input type="file" name="images[]" id="browse_image" class="form-control" accept="image/*">
 
                                                 </div>
                                                 <div class="col-lg-6" align="center">
@@ -82,7 +104,7 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                                                     </div>
                                                     <br>
                                                     <button type="button" class="btn btn-info" id="crop_button">ตัดภาพ</button>
-                                                    <input type="submit" class="btn btn-warning" id="upload_button" onclick="upload()" value="อัพโหลด">
+                                                    <button type="submit" class="btn btn-warning" id="upload_button" onclick="upload()">อัพโหลด</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -112,11 +134,10 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                         border-radius: 50%;
                     }
 
-                    /* The css styles for `outline` do not follow `border-radius` on iOS/Safari (#979). */
-                    /*.cropper-view-box {
-                outline: 0;
-                box-shadow: 0 0 0 1px #39f;
-                }*/
+                    /*The css styles for outline do not follow border-radius on iOS/Safari (#979).  .cropper-view-box {
+                        outline: 0;
+                        box-shadow: 0 0 0 1px #39f;
+                    }*/
                 </style>
 
                 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -198,7 +219,7 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                         return canvas;
                     }
 
-                    function upload() {
+                    /*function upload() {
                         var base64data = $('#cropped_image_result img').attr('src');
                         //alert(base64data);
                         $.ajax({
@@ -216,12 +237,29 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                                 }
                             }
                         });
-                    }
+                    }*/
                 </script>
 
 
                 <hr>
                 <form action="../user/user_dashboard.php" method="POST">
+                    <?php if (isset($_SESSION['success'])) { ?>
+
+                        <div class="alert alert-success" role="alert">
+                            <?php
+                            echo $_SESSION['success'];
+                            unset($_SESSION['success']);
+                            ?>
+                        </div>
+                    <?php }; ?>
+
+                    <?php if (isset($_SESSION['error'])) { ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php echo $_SESSION['error'];
+                            unset($_SESSION['error']);
+                            ?>
+                        </div>
+                    <?php }; ?>
                     <input type="hidden" value="<?php echo $userData['user_id']  ?>" name="user_id">
                     <div class="row">
 

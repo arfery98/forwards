@@ -34,15 +34,17 @@ $user_ad_districts_name = $rows['name_th'];
 
 $user_ad_zipcode = $_POST['zipcode'];
 
+
 $stmt = $conn->prepare("UPDATE tb_users SET user_name = ?, user_lastname = ?,  user_phone = ?, user_ad_no = ? ,user_ad_village = ? ,user_ad_groubs = ? ,user_ad_buildings = ? ,user_ad_alleys = ? ,user_ad_roads = ? ,user_ad_provinces = ? ,user_ad_amphures = ? ,user_ad_districts = ? ,user_ad_zipcode = ? WHERE user_id = ?");
 $stmt->execute([$user_name, $user_lastname,  $user_phone, $user_ad_no, $user_ad_village, $user_ad_groubs, $user_ad_buildings, $user_ad_alleys, $user_ad_roads, $user_ad_provinces, $user_ad_amphures, $user_ad_districts_name, $user_ad_zipcode, $user_id]);
 
 
 if ($stmt) {
+    $_SESSION['success'] = "แก้ไขข้อมูลเรียบร้อย!";
     header("location:../1page/profile.php");
     exit(0);
 } else {
-    echo "ไม่สามารถแก้ไขข้อมูลได้";
+    $_SESSION['error'] = "มีข้อผิดพลาดในแก้ไขข้อมูล";
 }
 //echo "Profile updated successfully!";
 

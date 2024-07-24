@@ -35,12 +35,26 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                 <p class="fs-3">ข้อมูลส่วนตัว</p>
                 <hr>
                 <center>
-                    <?php if (isset($_SESSION['user_id'])) { ?>
 
+
+
+                    <?php if (isset($_SESSION['user_profile'])) { ?>
                         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" height="180" class="d-inline-block align-text-middle rounded-circle">
-                    <?php } else { ?>
-                        <img src="file:///C:/Downloads/songtor-Photoroom.png" alt="" height="180" class="d-inline-block align-text-middle rounded-circle">
-                    <?php } ?>
+
+                        <?php
+                    } else {
+                        $images = json_decode($userData['user_profile'], true);
+                        if (is_array($images)) {
+                            foreach ($images as $image) { ?>
+                                <?php echo "<img src='../user/{$image}' alt='' height='180' class='d-inline-block align-text-middle '>" ?>
+                        <?php }
+                        } ?>
+                    <?php  } ?>
+
+                    <?php //} 
+                    ?>
+
+
                 </center>
                 <hr>
                 <div class="row">

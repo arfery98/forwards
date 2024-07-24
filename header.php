@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<header class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="../1page/index.php">
             <img src="../image/3.png" alt="" height="70" class="d-inline-block align-text-middle">
@@ -25,7 +25,7 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                โพสต์ขอรับบริจาค
+                                โพสต์การบริจาค
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="../1page/post.php">บุคคลประสงค์ส่งต่อ</a></li>
@@ -39,11 +39,11 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                บัญชีโครงการ
+                                บัญชีองค์กร
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="../1page/org_login.php">เข้าสู่ระบบโครงการ</a></li>
-                                <li><a class="dropdown-item" href="../1page/org_register.php">สมัครบัญชีโครงการ</a></li>
+                                <li><a class="dropdown-item" href="../1page/org_login.php">เข้าสู่ระบบองค์กร</a></li>
+                                <li><a class="dropdown-item" href="../1page/org_register.php">สมัครบัญชีองค์กร</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -68,7 +68,7 @@
 
                     <?php if (isset($_SESSION['user_id'])) { ?>
                         <span class="navbar-text">
-                            ยินดีต้องรับคุณ <?php echo /*$_SESSION['user_name'] */ "รชตะ" . ' ' . "แซ่ฟุ้ง" /*$_SESSION['user_lastname']; */?> &nbsp;
+                            ยินดีต้องรับคุณ <?php echo $_SESSION['user_name']  . ' ' . $_SESSION['user_lastname']; ?> &nbsp;
                         </span><a href="../user/logout.php" class="btn btn-outline-secondary rounded-pill" type="submit">ออกจากระบบ</a>
                     <?php } else { ?>
                         <a href="../1page/login.php" class="btn btn-outline-primary rounded-pill" type="submit">เข้าสู่ระบบ</a>
@@ -81,4 +81,4 @@
                 </div>
         </div>
     </div>
-</nav>
+</header>

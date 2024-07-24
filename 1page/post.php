@@ -1,10 +1,38 @@
 <?php
 session_start();
 include('../db.php');
+include('../db_connect.php');
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../1page/login.php");
 }
+
+$sql = "SELECT * FROM `tb_personal_forward` ORDER BY personal_forward_time DESC;";
+$result = $con->query($sql);
+
+    /*try {
+        if($_SERVER['REQUEST_METHOD'] == 'GET' ) {
+            $post = new stdClass();
+
+            $stmt = $conn->prepare('SELECT * FROM `tb_personal_forward` ORDER BY personal_forward_time DESC;');
+
+            if($stmt->execute()) {
+                $num = $stmt->rowCount();
+                if($num > 0) {
+
+                    $post->Result = array();
+                    while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                        extract($row);
+
+
+                    }
+                }
+            }
+        } 
+    } catch(PDOException $e){
+        echo $e->getMessage();
+    }*/
+
 
 ?>
 
@@ -30,7 +58,7 @@ if (!isset($_SESSION['user_id'])) {
     <div class="container">
         <br>
         <section class="about section-padding" id="about">
-
+        
             <div class="card" style="width: 80rem;">
                 <div class="text-center">
                     <div class="card-body">
@@ -77,104 +105,93 @@ if (!isset($_SESSION['user_id'])) {
         <!-- about section Ends -->
 
         <br>
-
-        <div class="card" style="width: 80rem;">
-            <div class="card-body">
-                <section class="portfolio section-padding" id="portfolio">
-                    <div class="text-center">
-                        <div class="row">
-                            <div class="text-center">
-                                <p class="fs-1"> ส่งต่อสิ่งของ </p><br>
-                                <p class="fs-3"> ใครมีของที่ไม่ใช้สามารถส่งต่อได้ </p>
-                            </div>
-                        </div>
-
-                        <hr>
-                        <br>
-                    </div>
-                    <br>
-
-                    <p class="fs-2">โครงการที่รับส่งต่อสิ่งของ</p>
-                    <br>
-                    <div class="row">
-                        <div class="col-12 col-md-12 col-lg-4">
-                            <div class="card text-light text-center bg-white pb-2 " style="width: 25rem; height: 46rem;">
-                                <div class="card-body text-dark">
-                                    <div class="img-area mb-4"><img alt="" class="img-fluid" src="../image/ee.webp">
-                                    </div>
-                                    <h3 class="card-title">วัดใช่มั้ย</h3>
-                                    <p class="lead"> วัดนี้เป็นวัดที่ดีและยังต้องการปัจจัยสมทบที่จะเอามาสร้างบริจาคให้เกิดความเจริญ
-                                        <hr> -ปัจจัย -ประตู -ผ้าป่า
-                                    </p>
-                                </div>
-                                <div class="card-footer bg-transparent">
-                                    <button class="btn bg-primary text-white rounded-pill">รายละเอียดเพิ่มเติม</button>
+        <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+            <div class="card" style="width: 80rem;">
+                <div class="card-body">
+                    <section class="portfolio section-padding" id="portfolio">
+                        <div class="text-center">
+                            <div class="row">
+                                <div class="text-center">
+                                    <p class="fs-1"> ส่งต่อสิ่งของ </p><br>
+                                    <p class="fs-3"> ใครมีของที่ไม่ใช้สามารถส่งต่อได้ </p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-4">
-                            <div class="card text-light text-center bg-white pb-2" style="width: 25rem; height: 46rem;">
-                                <div class="card-body text-dark">
-                                    <div class="img-area mb-4"><img alt="" class="img-fluid" src="../image/k.webp">
-                                    </div>
-                                    <h3 class="card-title">โรงเรียนอนุกูลนารี</h3>
-                                    <p class="lead">โรงเรียนอนุกูลต้องการสิ่งของมามอบให้เด็กขาดแคลน
-                                        <hr> -เสื้อผ้า
-                                    </p>
 
-                                </div>
-                                <div class="card-footer bg-transparent">
-                                    <button class="btn bg-primary text-white rounded-pill">รายละเอียดเพิ่มเติม</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-4">
-                            <div class="card text-light text-center bg-white pb-2" style="width: 25rem; height: 46rem;">
-                                <div class="card-body text-dark">
-                                    <div class="img-area mb-4"><img alt="" class="img-fluid" src="../image/o.webp">
-                                    </div>
-                                    <h3 class="card-title">สัตว์ป่า</h3>
-                                    <p class="lead">รักป่ารักเขา ยามนี้ทุกคนรวมตัวพร้อมสร้างสรรค์สื่อต่างๆ
-                                        <hr> -อาหารสัตว์
-                                    </p>
-
-                                </div>
-                                <div class="card-footer bg-transparent">
-                                    <button class="btn bg-primary text-white rounded-pill">รายละเอียดเพิ่มเติม</button>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="text-end">
+                            <hr>
                             <br>
-                            <button type="button" class="btn btn-outline-info rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                ดูเพิ่มเติม
-                            </button>
                         </div>
-                    </div>
+                        <br>
+
+                        <p class="fs-2">โครงการที่รับส่งต่อสิ่งของ</p>
+                        <br>
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-4">
+                                <div class="card text-light text-center bg-white pb-2 " style="width: 25rem; height: 46rem;">
+                                    <div class="card-body text-dark">
+                                        <div class="img-area mb-4"><img alt="" class="img-fluid" src="../image/ee.webp">
+                                        </div>
+                                        <h3 class="card-title"><?php echo $row['personal_forward_name']; ?></h3>
+                                        <p class="lead"> <?php echo $row['personal_forward_detail'] ?>
+                                        </p>
+                                    </div>
+                                    <div class="card-footer bg-transparent">
+                                        <button class="btn bg-primary text-white rounded-pill">รายละเอียดเพิ่มเติม</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-4">
+                                <div class="card text-light text-center bg-white pb-2" style="width: 25rem; height: 46rem;">
+                                    <div class="card-body text-dark">
+                                        <div class="img-area mb-4"><img alt="" class="img-fluid" src="../image/k.webp">
+                                        </div>
+                                        <h3 class="card-title">โรงเรียนอนุกูลนารี</h3>
+                                        <p class="lead">โรงเรียนอนุกูลต้องการสิ่งของมามอบให้เด็กขาดแคลน
+                                            <hr> -เสื้อผ้า
+                                        </p>
+
+                                    </div>
+                                    <div class="card-footer bg-transparent">
+                                        <button class="btn bg-primary text-white rounded-pill">รายละเอียดเพิ่มเติม</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-4">
+                                <div class="card text-light text-center bg-white pb-2" style="width: 25rem; height: 46rem;">
+                                    <div class="card-body text-dark">
+                                        <div class="img-area mb-4"><img alt="" class="img-fluid" src="../image/o.webp">
+                                        </div>
+                                        <h3 class="card-title">สัตว์ป่า</h3>
+                                        <p class="lead">รักป่ารักเขา ยามนี้ทุกคนรวมตัวพร้อมสร้างสรรค์สื่อต่างๆ
+                                            <hr> -อาหารสัตว์
+                                        </p>
+
+                                    </div>
+                                    <div class="card-footer bg-transparent">
+                                        <a class="btn bg-primary text-white rounded-pill" href="">รายละเอียดเพิ่มเติม</a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="text-end">
+                                <br>
+                                <button type="button" class="btn btn-outline-info rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    ดูเพิ่มเติม
+                                </button>
+                            </div>
+                        </div>
+                </div>
+                </section>
             </div>
-            </section>
-        </div>
 
 
-        <br>
-        <hr>
-        <br>
+            <br>
+            <hr>
+            <br>
 
-        <!-- END -->
+            <!-- END -->
 
-
-        <footer class="py-3 my-4">
-            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FORWARD </a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary"> 088-8888888</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">ข่าวสาร</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">สอบถาม</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">เกี่ยวกับ</a></li>
-            </ul>
-            <p class="text-center text-body-secondary"> FORWARD 2024 NSC, TH</p>
-        </footer>
+        <?php } ?>
 
 
 

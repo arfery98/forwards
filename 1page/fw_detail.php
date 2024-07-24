@@ -13,7 +13,8 @@ require('../db_connect.php');
 
 
 
-$sql = "SELECT tb_users.user_name,tb_users.user_lastname,tb_users.user_phone,tb_users.user_email,tb_personal_forward.personal_forward_name,tb_personal_forward.personal_forward_detail,tb_personal_forward.personal_forward_img,tb_personal_forward.personal_forward_catagories_id,tb_personal_forward.personal_forward_time FROM tb_users,tb_personal_forward WHERE tb_users.user_id = tb_personal_forward.personal_forward_user ;";
+//$sql = "SELECT tb_users.user_name,tb_users.user_lastname,tb_users.user_phone,tb_users.user_email,tb_personal_forward.personal_forward_name,tb_personal_forward.personal_forward_detail,tb_personal_forward.personal_forward_img,tb_personal_forward.personal_forward_catagories_id,tb_personal_forward.personal_forward_time FROM tb_users,tb_personal_forward WHERE tb_users.user_id = tb_personal_forward.personal_forward_user ;";
+$sql = "SELECT tb_personal_forward.*,tb_users.user_name,tb_users.user_lastname,tb_users.user_email,tb_users.user_phone FROM tb_personal_forward LEFT JOIN tb_users ON tb_personal_forward.personal_forward_user = tb_users.user_id ORDER BY tb_personal_forward.personal_forward_time DESC;";
 $result = $con->query($sql);
 
 ?>
@@ -45,24 +46,35 @@ $path = 'uploads/images/'; */
                 <?php while ($row = mysqli_fetch_assoc($result)) { ?>
                     <br>
                     <div class="row">
-                        <?php  ?>
+
                         <div id="carouselExample" class="carousel slide">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img src="<?php echo $row['personal_forward_img']; ?>" class="d-block w-100" alt="auto">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="https://s359.kapook.com/pagebuilder/4b09421f-793a-4050-b9c0-32624c6da3dc.jpg" class="d-block w-100" alt="auto">
-                                </div>
-                            </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
+                            <?php $images = json_decode($row['personal_forward_img'], true);
+                            if (is_array($images)) {
+                                foreach ($images as $image) { ?>
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <?php echo "<img src='../social/{$image}' class='d-block w-100' alt='images'>"; ?>
+
+
+                                        </div>
+                                        <div class="carousel-item">
+                                            <!-- <img src="https://s359.kapook.com/pagebuilder/4b09421f-793a-4050-b9c0-32624c6da3dc.jpg" class="d-block w-100" alt="auto"> -->
+                                            <?php echo "<img src='../social/{$image}' class='d-block w-100' alt='images'>";
+                                            /* echo "<img src='../social/{$image}' class='d-block w-100' alt='images'>"; */ ?>
+
+                                        <?php }  ?>
+                                    <?php   } /* else {  echo "ผิดเด้อ"; } */ ?>
+
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
                         </div>
                         <br>
 
