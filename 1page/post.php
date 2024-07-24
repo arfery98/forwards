@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 $sql = "SELECT * FROM `tb_personal_forward` ORDER BY personal_forward_time DESC;";
 $result = $con->query($sql);
 
-    /*try {
+/*try {
         if($_SERVER['REQUEST_METHOD'] == 'GET' ) {
             $post = new stdClass();
 
@@ -58,7 +58,7 @@ $result = $con->query($sql);
     <div class="container">
         <br>
         <section class="about section-padding" id="about">
-        
+
             <div class="card" style="width: 80rem;">
                 <div class="text-center">
                     <div class="card-body">
@@ -126,9 +126,15 @@ $result = $con->query($sql);
                         <br>
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-4">
-                                <div class="card text-light text-center bg-white pb-2 " style="width: 25rem; height: 46rem;">
+                                <div class="card text-light text-center bg-white pb-2 " style="width: 25rem; height: auto;">
                                     <div class="card-body text-dark">
-                                        <div class="img-area mb-4"><img alt="" class="img-fluid" src="../image/ee.webp">
+                                        <div class="img-area mb-4">
+                                            <?php $images = json_decode($row['personal_forward_img'], true);
+                                            if (is_array($images)) {
+                                                foreach ($images as $image) { ?>
+                                                    <?php echo "<img alt='' class='img-fluid' src='../social/{$image}'>" ; ?>
+                                                <?php } ?>
+                                            <?php } ?>
                                         </div>
                                         <h3 class="card-title"><?php echo $row['personal_forward_name']; ?></h3>
                                         <p class="lead"> <?php echo $row['personal_forward_detail'] ?>
@@ -139,7 +145,7 @@ $result = $con->query($sql);
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-12 col-lg-4">
+                            <!-- <div class="col-12 col-md-12 col-lg-4">
                                 <div class="card text-light text-center bg-white pb-2" style="width: 25rem; height: 46rem;">
                                     <div class="card-body text-dark">
                                         <div class="img-area mb-4"><img alt="" class="img-fluid" src="../image/k.webp">
@@ -170,7 +176,7 @@ $result = $con->query($sql);
                                         <a class="btn bg-primary text-white rounded-pill" href="">รายละเอียดเพิ่มเติม</a>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
 
                             <div class="text-end">
