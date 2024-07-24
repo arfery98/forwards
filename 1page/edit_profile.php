@@ -330,7 +330,7 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
 
                         <div class="col">
                             <label for="formGroupExampleInput" class="form-label">จังหวัด</label>
-                            <select name="provinces" class="form-select" aria-label="Default select example" id="provinces">
+                            <select name="provinces" class="form-select" aria-label="Default select example" id="provinces" required>
                                 <option value="" selected disabled>กรุณาเลือกจังหวัด</option>
                                 <?php foreach ($result as $row) { ?>
                                     <option value="<?= $row['name_th'] ?>"><?= $row['name_th'] ?></option>
@@ -339,12 +339,12 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                         </div>
                         <div class="col">
                             <label for="formGroupExampleInput" class="form-label">อำเภอ/เขต</label>
-                            <select class="form-select" aria-label="Default select example" name="amphures" id="amphures">
+                            <select class="form-select" aria-label="Default select example" name="amphures" id="amphures" required>
                             </select>
                         </div>
                         <div class="col">
                             <label for="formGroupExampleInput" class="form-label">ตำบล/แขวง</label>
-                            <select class="form-select" aria-label="Default select example" name="districts" id="district">
+                            <select class="form-select" aria-label="Default select example" name="districts" id="district" required>
                             </select>
                         </div>
                         <div class="col">
@@ -357,7 +357,7 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                     <br>
                     <div class="row text-end">
                         <div class="col">
-                            <a href="edit_profile.php" type="button" class="btn btn-danger rounded-pill">ยกเลิก</a>
+                            <a href="profile.php" type="button" class="btn btn-danger rounded-pill">ยกเลิก</a>
                             <button type="submit" class="btn btn-primary rounded-pill">แก้ไขข้อมูล</button>
                         </div>
 

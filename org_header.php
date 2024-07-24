@@ -23,6 +23,20 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            โพสต์การบริจาค
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="../1page/post.php">บุคคลประสงค์ส่งต่อ</a></li>
+                            <li><a class="dropdown-item" href="../1page/post.php">โครงการส่งต่อ</a></li>
+                            <li><a class="dropdown-item" href="../1page/post.php">ขอรับบริจาค</a></li>
+                            <li><a class="dropdown-item" href="../1page/post.php">ประชาสัมพันธ์</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
                         <a class="nav-link " href="../1page/org_rq.php" role="button" aria-expanded="false">
                             ขอรับบริจาค
                         </a>
