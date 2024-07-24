@@ -50,7 +50,7 @@ if (!isset($_SESSION['user_id'])) {
                     <br>
 
                     <hr class="wp-block-separator sep-line is-style-wide">
-                    <form action="../social/upload.php" method="post" enctype="multipart/form-data">
+                    <form action="../social/upload_rq.php" method="post" enctype="multipart/form-data">
 
                         <?php if (isset($_SESSION['success'])) { ?>
 
@@ -75,14 +75,14 @@ if (!isset($_SESSION['user_id'])) {
                                 <label for="Email" class="form-label">
                                     สิ่งของที่ต้องการ
                                 </label>
-                                <input type="text" class="form-control" style="height:40px;" name="personal_forward_name" required="">
+                                <input type="text" class="form-control" style="height:40px;" name="" required="">
                             </div>
 
                             <div class="col-md-12 mb-3">
                                 <label for="Message" class="form-label">
                                     เหตุผล
                                 </label>
-                                <textarea class="form-control" rows="3" name="personal_forward_detail"></textarea>
+                                <textarea class="form-control" rows="3" name=""></textarea>
                             </div>
 
                             <div class="text-center">
@@ -261,6 +261,8 @@ if (!isset($_SESSION['user_id'])) {
                                 <button type="submit" <?php if (isset($_SESSION['organization_name'])) { ?> name="organization-forwards" ; <?php } else { ?> name="Personal-forwards" ; <?php } ?> id="submitButton" class="btn btn-warning rounded-pill">ส่งต่อ</button>
                             </div>
                     </form>
+
+                    
 
                 </div>
 

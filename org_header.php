@@ -51,7 +51,7 @@
             <?php if (isset($_SESSION['organization_name'])) { ?>
 
                 <span class="navbar-text">
-                    ยินดีต้องรับมูลนิธิ <?php echo "บ้านนกขมิ้น" /*$_SESSION['organization_name']; */?>
+                    ยินดีต้องรับมูลนิธิ <?php echo $_SESSION['organization_name']; ?>
                 </span>
                 &nbsp;
                 <a class="btn btn-outline-danger rounded-pill" href="../user/org_logout.php" type="submit">ออกจากระบบ</a>

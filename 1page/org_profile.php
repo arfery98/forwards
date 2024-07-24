@@ -124,8 +124,7 @@ $user_orgData = $stmt->fetch(PDO::FETCH_ASSOC);
                         <br>
                         <div class="row text-end">
                             <div class="col">
-                                <button type="button" class="btn btn-danger rounded-pill">ยกเลิก</button>
-                                <button type="button" class="btn btn-primary rounded-pill">แก้ไขข้อมูล</button>
+                                <a type="button" class="btn btn-primary rounded-pill" href="org_edit_profile.php">แก้ไขข้อมูล</a>
                             </div>
                         </div>
                     </div>

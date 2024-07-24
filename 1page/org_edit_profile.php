@@ -195,12 +195,12 @@ $user_orgData = $stmt->fetch(PDO::FETCH_ASSOC);
                                 </div>
                                 <div class="col">
                                     <label for="formGroupExampleInput" class="form-label">อำเภอ/เขต</label>
-                                    <select class="form-select" aria-label="Default select example" name="amphures" id="amphures">
+                                    <select class="form-select" aria-label="Default select example" name="amphures" id="amphures" require->
                                     </select>
                                 </div>
                                 <div class="col">
                                     <label for="formGroupExampleInput" class="form-label">ตำบล/แขวง</label>
-                                    <select class="form-select" aria-label="Default select example" name="district" id="district">
+                                    <select class="form-select" aria-label="Default select example" name="district" id="district" require>
                                     </select>
                                 </div>
                                 <div class="col">
