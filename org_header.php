@@ -6,7 +6,7 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <?php if (isset($_SESSION['user_id'])) { ?>
+        <?php if (isset($_SESSION['organization_name'])) { ?>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
@@ -36,21 +36,28 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link " href="../1page/org_rq.php" role="button" aria-expanded="false">
-                            ขอรับบริจาค
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link " href="../1page/forwards.php" role="button" aria-expanded="false">
-                            ส่งต่อ
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link " href="#" role="button" aria-expanded="false">
-                            ประชาสัมพันธ์
-                        </a>
-                    </li>
+
+                    <?php
+                    include('../db_connect.php');
+                    $sql = "SELECT * FROM `tb_organization` WHERE organization_verify = 'IP'";
+                    $result = $con->query($sql); ?>
+                    <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link " href="../1page/org_rq.php" role="button" aria-expanded="false">
+                                ขอรับบริจาค
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link " href="../1page/forwards.php" role="button" aria-expanded="false">
+                                ส่งต่อ
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link " href="#" role="button" aria-expanded="false">
+                                ประชาสัมพันธ์
+                            </a>
+                        </li>
+                    <?php } ?>
 
 
                 </ul>

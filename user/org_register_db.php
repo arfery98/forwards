@@ -53,8 +53,9 @@ if (!filter_var($organization_email, FILTER_VALIDATE_EMAIL)) {
         $hash_password = password_hash($organization_password, PASSWORD_DEFAULT);
 
         try {
-            $stmt = $conn->prepare("INSERT INTO `tb_organization`(`organization_name`, `organization_email`, `organization_password`, `organization_phone`) VALUES (?, ?, ?, ?)");
-            $stmt->execute([$organization_name, $organization_email, $hash_password, $organization_phone]);
+            $organization_verify = 'IP';
+            $stmt = $conn->prepare("INSERT INTO tb_organization(organization_name, organization_email, organization_password, organization_phone, organization_verify) VALUES (?, ?, ?, ?, ?)");
+            $stmt->execute([$organization_name, $organization_email, $hash_password, $organization_phone, $organization_verify]);
             
             //$_SESSION['success'] = "ลงทะเบียนสำเร็จ";
             header("Location: ../1page/org_login.php");

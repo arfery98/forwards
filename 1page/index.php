@@ -158,7 +158,95 @@ $result2 = $con->query($sql2);
                                             </p>
                                         </div>
                                         <div class="card-footer bg-transparent border-light">
-                                            <button class="btn bg-primary text-white rounded-pill">รายละเอียดเพิ่มเติม</button>
+                                            <a href="fw_detail.php?personal_forward_id=<?php echo $row['personal_forward_id'] ?>" class="btn bg-primary text-white rounded-pill">รายละเอียดเพิ่มเติม</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                            <!-- <div class="col-12 col-md-12 col-lg-4">
+                                <div class="card text-light text-center bg-white pb-2" style="width: 25rem; height: 36rem;">
+                                    <div class="card-body text-dark">
+                                        <div class="img-area mb-4"><img alt="" class="img-fluid" src="../image/po.jpg">
+                                        </div>
+                                        <h3 class="card-title">เสื้อผ้า</h3>
+                                        <p class="lead">ฉันตั้งใจบริจาคให้มูลนิธิเพราะฉันไม่ใช้แล้วเป็นสิ่งเหลือที่ใช้ได้
+                                        </p>
+
+                                    </div>
+                                    <div class="card-footer bg-transparent border-light">
+                                        <button class="btn bg-primary text-white rounded-pill">รายละเอียดเพิ่มเติม</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-4">
+                                <div class="card text-light text-center bg-white pb-2" style="width: 25rem; height: 36rem;">
+                                    <div class="card-body text-dark">
+                                        <div class="img-area mb-4"><img alt="" class="img-fluid" src="../image/i.jpg">
+                                        </div>
+                                        <h3 class="card-title">อาหารแห้ง</h3>
+                                        <p class="lead"> อาหารแห้งที่อยากให้ช่วยเหลือเด็ก ในยามที่ฉุกเฉิน
+                                        </p>
+
+                                    </div>
+                                    <div class="card-footer bg-transparent border-light">
+                                        <button class="btn bg-primary text-white rounded-pill">รายละเอียดเพิ่มเติม</button>
+                                    </div>
+                                </div>
+                            </div> -->
+
+
+                            <div class="text-end">
+                                <br>
+                                <button type="button" class="btn btn-outline-info rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    ดูเพิ่มเติม
+                                </button>
+                            </div>
+                        </div>
+
+                </div>
+                </section>
+            </div>
+            <br>
+            <div class="card" style="width: 80rem;">
+                <div class="card-body">
+                    <section class="portfolio section-padding" id="portfolio">
+                        <div class="text-center">
+                            <div class="row">
+                                <div class="text-center">
+                                    <p class="fs-1"> ส่งต่อสิ่งของ </p><br>
+                                    <p class="fs-3"> ใครมีของที่ไม่ใช้สามารถส่งต่อได้ </p>
+                                </div>
+                            </div>
+
+                            <hr>
+                            <br>
+
+                        </div>
+                        <br>
+
+                        <p class="fs-2">โพสต์บริจาคของบุคคลทั่วไป</p>
+                        <br>
+                        <div class="row">
+                            <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                                <div class="col-12 col-md-12 col-lg-4">
+                                    <div class="card text-light text-center bg-white pb-2 " style="width: 25rem; height: auto;">
+                                        <div class="card-body text-dark">
+                                            <div class="img-area mb-4">
+                                                <?php $images = json_decode($row['personal_forward_img'], true);
+                                                if (is_array($images)) {
+                                                    foreach ($images as $image) { ?>
+                                                        <div class="mx-auto" style="width: 300px;">
+                                                            <?php echo "<img alt='' class='img-thumbnail' src='../social/{$image}'>"; ?>
+                                                        </div>
+                                                    <?php } ?>
+                                                <?php } ?>
+                                            </div>
+                                            <h3 class="card-title"><?php echo $row['personal_forward_name']; ?></h3>
+                                            <p class="lead"> <?php echo $row['personal_forward_detail'] ?>
+                                            </p>
+                                        </div>
+                                        <div class="card-footer bg-transparent border-light">
+                                            <a href="fw_detail.php?personal_forward_id=<?php echo $row['personal_forward_id'] ?>" class="btn bg-primary text-white rounded-pill">รายละเอียดเพิ่มเติม</a>
                                         </div>
                                     </div>
                                 </div>

@@ -131,7 +131,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['organization-forwards'
 
         // Check if total images exceed the limit
         if ($total_images > 20) {
-            echo "อัพรูปภาพสูงสุด 20 รูป";
+            $_SESSION['error'] = "อัพรูปภาพสูงสุด 20 รูป" ;
+            //echo "อัพรูปภาพสูงสุด 20 รูป";
             exit;
         }
 
@@ -149,11 +150,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['organization-forwards'
                 if (move_uploaded_file($image_files['tmp_name'][$i], $image_path)) {
                     $image_paths[] = $image_path;
                 } else {
-                    echo "Error uploading file: " . $image_files['name'][$i];
+                    $_SESSION['error'] = "เกิดข้อผิดพลาดในการอัปโหลดไฟล์:" . $image_files['name'][$i] ;
+                    //echo "Error uploading file: " . $image_files['name'][$i];
                     exit;
                 }
             } else {
-                echo "Unsupported file type: " . $extension;
+                $_SESSION['error'] = "ไม่รองรับประเภทไฟล์นี้:" . $extension ;
+                //echo "Unsupported file type: " . $extension;
                 exit;
             }
         }

@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] ) {
     $user_ad_districts_name = $rows['name_th'];
 
     $org_ad_zipcode = $_POST['zipcode'];
-    $org_rq_status = 'No forwards';
+    $org_rq_status = 'No_forwards';
 
 
     if (isset($_FILES['images'])) {
@@ -43,7 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] ) {
 
         // Check if total images exceed the limit
         if ($total_images > 20) {
-            echo "อัพรูปภาพสูงสุด 20 รูป";
+            $_SESSION['error'] = "อัพรูปภาพสูงสุด 20 รูป" ;
+            //echo "อัพรูปภาพสูงสุด 20 รูป";
             exit;
         }
 
@@ -61,11 +62,13 @@ if ($_SERVER['REQUEST_METHOD'] ) {
                 if (move_uploaded_file($image_files['tmp_name'][$i], $image_path)) {
                     $image_paths[] = $image_path;
                 } else {
-                    echo "Error uploading file: " . $image_files['name'][$i];
+                    $_SESSION['error'] = "เกิดข้อผิดพลาดในการอัปโหลดไฟล์:" . $image_files['name'][$i] ;
+                    //echo "Error เกิดข้อผิดพลาดในการอัปโหลดไฟล์ file: " . $image_files['name'][$i];
                     exit;
                 }
             } else {
-                echo "Unsupported file type: " . $extension;
+                $_SESSION['error'] = "ไม่รองรับประเภทไฟล์นี้:" . $extension ;
+                //echo "Unsupported file type: " . $extension;
                 exit;
             }
         }
@@ -83,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] ) {
             VALUES ('$organization_name','$org_rq_name','$org_rq_detail','$org_rq_img','$org_rq_catagories_id','$org_ad_no','$org_ad_village','$org_ad_groubs','$org_ad_buildings','$org_ad_alleys','$org_ad_roads','$org_ad_provinces','$org_ad_amphures','$org_ad_districts','$org_ad_zipcode','$org_rq_status')";
             $result = mysqli_query($con, $sql);
             if ($result) {
-                $_SESSION['success'] = "โพสต์บริจาคเรียบร้อย!";
+                $_SESSION['success'] = "โพสต์ขอรับการบริจาคเรียบร้อย!";
                 header("Location: ../1page/org_rq.php");
                 exit;
             } else {
