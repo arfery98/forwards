@@ -1,10 +1,17 @@
 <?php
 session_start();
 include('../db.php');
+include('../db_connect.php');
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../1page/login.php");
 }
+
+$sql = "SELECT * FROM `tb_personal_forward` WHERE personal_forward_status = 'Open'  ORDER BY personal_forward_time DESC LIMIT 0,3";
+$result = $con->query($sql);
+
+$sql2 = "SELECT * FROM `tb_organization_forwards` WHERE organization_forward_status = 'Open'  ORDER BY organization_forward_time DESC LIMIT 0,3";
+$result2 = $con->query($sql2);
 
 ?>
 
@@ -132,20 +139,31 @@ if (!isset($_SESSION['user_id'])) {
                         <p class="fs-2">โพสต์บริจาคของบุคคลทั่วไป</p>
                         <br>
                         <div class="row">
-                            <div class="col-12 col-md-12 col-lg-4">
-                                <div class="card text-light text-center bg-white pb-2 " style="width: 25rem; height: 36rem;">
-                                    <div class="card-body text-dark">
-                                        <div class="img-area mb-4"><img alt="" class="img-fluid" src="../image/pi.jpg">
+                            <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                                <div class="col-12 col-md-12 col-lg-4">
+                                    <div class="card text-light text-center bg-white pb-2 " style="width: 25rem; height: auto;">
+                                        <div class="card-body text-dark">
+                                            <div class="img-area mb-4">
+                                                <?php $images = json_decode($row['personal_forward_img'], true);
+                                                if (is_array($images)) {
+                                                    foreach ($images as $image) { ?>
+                                                        <div class="mx-auto" style="width: 300px;">
+                                                            <?php echo "<img alt='' class='img-thumbnail' src='../social/{$image}'>"; ?>
+                                                        </div>
+                                                    <?php } ?>
+                                                <?php } ?>
+                                            </div>
+                                            <h3 class="card-title"><?php echo $row['personal_forward_name']; ?></h3>
+                                            <p class="lead"> <?php echo $row['personal_forward_detail'] ?>
+                                            </p>
                                         </div>
-                                        <h3 class="card-title">ยา และ กล่องรักษาสุขภาพ</h3>
-                                        <p class="lead"> ผมตั้งใจบริจาคให้เด็กบนที่ต่างแดน และ ช่วยเหลือได้ </p>
-                                    </div>
-                                    <div class="card-footer bg-transparent border-light">
-                                        <button class="btn bg-primary text-white rounded-pill">รายละเอียดเพิ่มเติม</button>
+                                        <div class="card-footer bg-transparent border-light">
+                                            <button class="btn bg-primary text-white rounded-pill">รายละเอียดเพิ่มเติม</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-4">
+                            <?php } ?>
+                            <!-- <div class="col-12 col-md-12 col-lg-4">
                                 <div class="card text-light text-center bg-white pb-2" style="width: 25rem; height: 36rem;">
                                     <div class="card-body text-dark">
                                         <div class="img-area mb-4"><img alt="" class="img-fluid" src="../image/po.jpg">
@@ -174,7 +192,7 @@ if (!isset($_SESSION['user_id'])) {
                                         <button class="btn bg-primary text-white rounded-pill">รายละเอียดเพิ่มเติม</button>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
 
                             <div class="text-end">
@@ -194,7 +212,7 @@ if (!isset($_SESSION['user_id'])) {
         <hr>
         <br>
 
-      
+
 
 
 

@@ -15,9 +15,9 @@ if (isset($_POST['org_login'])) {
             $stmt->bindParam(":organization_email", $organization_email);
             $stmt->execute();
             $org_userData = $stmt->fetch(PDO::FETCH_ASSOC);
+            
 
-
-            if ($org_userData['organization_password'] == $organization_password) {
+            if (password_verify($organization_password,$org_userData['organization_password'])) {
                 //$_SESSION['user_id'] = $org_userData['user_id'];
                 $_SESSION['organization_name'] = $org_userData['organization_name'];
                 //$_SESSION['user_lastname'] = $org_userData['user_lastname'];

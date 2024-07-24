@@ -61,28 +61,28 @@ $user_orgData = $stmt->fetch(PDO::FETCH_ASSOC);
                         <div class="row">
                             <div class="col">
                                 <label for="org_name" class="form-label">ชื่อองค์กรณ์/โครงการ</label>
-                                <input type="text" class="form-control" id="org_name" value="<?php echo $user_orgData['organization_email'];  ?>" readonly>
+                                <input type="text" class="form-control" id="org_name" value="<?php echo $user_orgData['organization_name'];  ?>" readonly>
                             </div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="col">
                                 <label for="org_pass" class="form-label">รหัสผ่านเดิม</label>
-                                <input type="password" class="form-control" id="org_pass" name="user_password" require>
+                                <input type="password" class="form-control" id="org_pass" name="user_password" required>
                             </div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="col">
                                 <label for="org_editpass" class="form-label">รหัสผ่านใหม่</label>
-                                <input type="password" class="form-control" id="org_editpass" name="user_new_pass" require>
+                                <input type="password" class="form-control" id="org_editpass" name="user_new_pass" required>
                             </div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="col">
                                 <label for="org_confirm" class="form-label">ยืนยันรหัสผ่านใหม่</label>
-                                <input type="password" class="form-control" id="org_confirm" name="user_checkpass" require>
+                                <input type="password" class="form-control" id="org_confirm" name="user_checkpass" required>
                             </div>
                         </div>
                         <br>

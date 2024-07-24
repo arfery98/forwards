@@ -43,7 +43,7 @@ if (!isset($_SESSION['user_id'])) {
                     <div class="text-center">
                         <h3 class="gb-headline gb-headline-eba9dd47"> FORWARD </h3>
                         <p>
-                            <span class="has-inline-color has-white-color">กรอกข้อมูลสิ่งของที่ต้อง ด้านล่าง
+                            <span class="has-inline-color has-white-color">กรอกข้อมูลสิ่งของที่ต้องการ ด้านล่าง
                             </span>
                         </p>
                     </div>
@@ -106,7 +106,7 @@ if (!isset($_SESSION['user_id'])) {
                                             <img name="display_image_data" id="display_image_data" src="dummy-image.png" alt="Picture">
                                         </div>
                                         <br>
-                                        <input type="file" name="images[]" id="personal_forward_img" class="form-control" multiple accept="image/*">
+                                        <input type="file" name="images[]" id="personal_forward_img" class="form-control" multiple accept="image/*" required>
                                     </div>
                                 </div>
                                 <br>
@@ -216,7 +216,7 @@ if (!isset($_SESSION['user_id'])) {
 
                             <div class="col">
                                 <label for="formGroupExampleInput" class="form-label">จังหวัด</label>
-                                <select name="provinces" class="form-select" aria-label="Default select example" id="provinces">
+                                <select name="provinces" class="form-select" aria-label="Default select example" id="provinces" required>
                                     <option value="" selected disabled>กรุณาเลือกจังหวัด</option>
                                     <?php foreach ($result as $row) { ?>
                                         <option value="<?= $row['name_th'] ?>"><?= $row['name_th'] ?></option>
@@ -225,12 +225,12 @@ if (!isset($_SESSION['user_id'])) {
                             </div>
                             <div class="col">
                                 <label for="formGroupExampleInput" class="form-label">อำเภอ/เขต</label>
-                                <select class="form-select" aria-label="Default select example" name="amphures" id="amphures">
+                                <select class="form-select" aria-label="Default select example" name="amphures" id="amphures" required>
                                 </select>
                             </div>
                             <div class="col">
                                 <label for="formGroupExampleInput" class="form-label">ตำบล/แขวง</label>
-                                <select class="form-select" aria-label="Default select example" name="districts" id="district">
+                                <select class="form-select" aria-label="Default select example" name="districts" id="district" required>
                                 </select>
                             </div>
                             <div class="col">
@@ -258,7 +258,7 @@ if (!isset($_SESSION['user_id'])) {
                             <br>
                             <hr>
                             <div class="text-center">
-                                <button type="submit" <?php if (isset($_SESSION['organization_name'])) { ?> name="organization-forwards" ; <?php } else { ?> name="Personal-forwards" ; <?php } ?> id="submitButton" class="btn btn-warning rounded-pill">ส่งต่อ</button>
+                                <button type="submit" id="submitButton" class="btn btn-warning rounded-pill">ส่งต่อ</button>
                             </div>
                     </form>
 
