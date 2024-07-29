@@ -53,7 +53,7 @@ if (!filter_var($organization_email, FILTER_VALIDATE_EMAIL)) {
         $hash_password = password_hash($organization_password, PASSWORD_DEFAULT);
 
         try {
-            $organization_verify = 'IP';
+            $organization_verify = 'CIP';
             $stmt = $conn->prepare("INSERT INTO tb_organization(organization_name, organization_email, organization_password, organization_phone, organization_verify) VALUES (?, ?, ?, ?, ?)");
             $stmt->execute([$organization_name, $organization_email, $hash_password, $organization_phone, $organization_verify]);
             

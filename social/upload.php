@@ -42,7 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['Personal-forwards'])) 
 
         // Check if total images exceed the limit
         if ($total_images > 20) {
-            echo "อัพรูปภาพสูงสุด 20 รูป";
+            $_SESSION['error'] = "อัพรูปภาพสูงสุด 20 รูป" ;
+            //echo "อัพรูปภาพสูงสุด 20 รูป";
             exit;
         }
 
@@ -60,10 +61,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['Personal-forwards'])) 
                 if (move_uploaded_file($image_files['tmp_name'][$i], $image_path)) {
                     $image_paths[] = $image_path;
                 } else {
-                    echo "Error uploading file: " . $image_files['name'][$i];
+                    $_SESSION['error'] = "เกิดข้อผิดพลาดในการอัปโหลดไฟล์:" . $image_files['name'][$i] ;
+                    //echo "Error uploading file: " . $image_files['name'][$i];
                     exit;
                 }
             } else {
+                 $_SESSION['error'] = "ไม่รองรับนามสกุลไฟล์:" . $extension;
                 echo "Unsupported file type: " . $extension;
                 exit;
             }
@@ -135,7 +138,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['organization-forwards'
             //echo "อัพรูปภาพสูงสุด 20 รูป";
             exit;
         }
-
         // Loop through each file
         for ($i = 0; $i < $total_images; $i++) {
             // Get file extension and convert to lowercase
@@ -165,8 +167,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['organization-forwards'
         if (!empty($image_paths)) {
             $organization_forward_img = json_encode($image_paths);
 
-            $sql = "INSERT INTO tb_organization_forwards (organization_forward_user, organization_forward_name, organization_forward_detail, organization_forward_img, organization_forward_catagories_id, `personal_forward_ad_no`, `personal_forward_ad_village`, `personal_forward_ad_groubs`, `personal_forward_ad_buildings`, `personal_forward_ad_alleys`, `personal_forward_ad_roads`, `personal_forward_ad_provinces`, `personal_forward_ad_amphures`, `personal_forward_ad_districts`, `personal_forward_ad_zipcode`, organization_forward_status) 
-            VALUES ('$organization_name','$organization_forward_name','$organization_forward_detail','$organization_forward_img','$organization_forward_catagories_id','$personal_forward_ad_no','$personal_forward_ad_village','$personal_forward_ad_groubs','$personal_forward_ad_buildings','$personal_forward_ad_alleys','$personal_forward_ad_roads','$personal_forward_ad_provinces','$personal_forward_ad_amphures','$personal_forward_ad_districts','$personal_forward_ad_zipcode','$organization_forward_status')";
+            $sql = "INSERT INTO tb_organization_forwards (organization_forward_user, organization_forward_name, organization_forward_detail, organization_forward_img, organization_forward_catagories_id, organization_forward_ad_no, `organization_forward_ad_village`, `organization_forward_ad_groubs`, `organization_forward_ad_buildings`, `organization_forward_ad_alleys`, `organization_forward_ad_roads`, `organization_forward_ad_provinces`, `organization_forward_ad_amphures`, `organization_forward_ad_districts`, `organization_forward_ad_zipcode`, organization_forward_status) 
+            VALUES ('$organization_name','$organization_forward_name','$organization_forward_detail','$organization_forward_img','$organization_forward_catagories_id','$organization_forward_ad_no','$organization_forward_ad_village','$organization_forward_ad_groubs','$organization_forward_ad_buildings','$organization_forward_ad_alleys','$organization_forward_ad_roads','$organization_forward_ad_provinces','$organization_forward_ad_amphures','$organization_forward_ad_districts','$organization_forward_ad_zipcode','$organization_forward_status')";
             $result = mysqli_query($con, $sql);
 
             if ($result) {

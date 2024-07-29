@@ -28,10 +28,10 @@
                                 โพสต์การบริจาค
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="../1page/post.php">บุคคลประสงค์ส่งต่อ</a></li>
-                                <li><a class="dropdown-item" href="../1page/post.php">โครงการส่งต่อ</a></li>
-                                <li><a class="dropdown-item" href="../1page/post.php">ขอรับบริจาค</a></li>
-                                <li><a class="dropdown-item" href="../1page/post.php">ประชาสัมพันธ์</a></li>
+                                <li><a class="dropdown-item" href="../1page/post_1.php">บุคคลประสงค์ส่งต่อ</a></li>
+                                <li><a class="dropdown-item" href="../1page/post_2.php">องค์กรส่งต่อ</a></li>
+                                <li><a class="dropdown-item" href="../1page/post_3.php">ขอรับบริจาค</a></li>
+                                <li><a class="dropdown-item" href="../1page/post_4.php">ประชาสัมพันธ์</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -54,6 +54,24 @@
                                 ส่งต่อ
                             </a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link " href="../1page/declares.php" role="button" aria-expanded="false">
+                                ประชาสัมพันธ์
+                            </a>
+                        </li>
+
+                        <?php
+                        include('../db_connect.php');
+                        $sql = "SELECT * FROM `tb_users` WHERE user_role = 'KING';";
+                        $result = $con->query($sql); ?>
+                        <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link " href="../1page/admin.php" role="button" aria-expanded="false">
+                                    เช็คการสมัครองค์กร
+                                </a>
+                            </li>
+                        <?php } ?>
 
                     </ul>
                 <?php } else { ?>

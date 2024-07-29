@@ -18,6 +18,7 @@ if (!isset($_SESSION['user_id'])) {
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <title>ส่งต่อ</title>
     <link rel="stylesheet" href="../font.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" />
     <?php if (isset($_SESSION['organization_name'])) {
 
         include('../org_header.php');
@@ -50,7 +51,8 @@ if (!isset($_SESSION['user_id'])) {
                     <br>
 
                     <hr class="wp-block-separator sep-line is-style-wide">
-                    <form action="../social/upload_rq.php" method="post" enctype="multipart/form-data">
+
+                    <form action="../social/upload_rq.php" method="POST" enctype="multipart/form-data">
 
                         <?php if (isset($_SESSION['success'])) { ?>
 
@@ -75,14 +77,14 @@ if (!isset($_SESSION['user_id'])) {
                                 <label for="Email" class="form-label">
                                     สิ่งของที่ต้องการ
                                 </label>
-                                <input type="text" class="form-control" style="height:40px;" name="" required="">
+                                <input type="text" class="form-control" style="height:40px;" name="org_rq_name" required="">
                             </div>
 
                             <div class="col-md-12 mb-3">
                                 <label for="Message" class="form-label">
                                     เหตุผล
                                 </label>
-                                <textarea class="form-control" rows="3" name=""></textarea>
+                                <textarea class="form-control" rows="3" name="org_rq_detail" required></textarea>
                             </div>
 
                             <div class="text-center">
@@ -110,55 +112,7 @@ if (!isset($_SESSION['user_id'])) {
                                     </div>
                                 </div>
                                 <br>
-                                <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-                                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-                                <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
-                                <script>
-                                    $("body").on("change", "#browse_image", function(e) {
-                                        var files = e.target.files;
-                                        var done = function(url) {
-                                            $('#display_image_div').html('');
-                                            $("#display_image_div").html('<img name="display_image_data" id="display_image_data" src="' + url + '" alt="Uploaded Picture">');
 
-                                        };
-                                        if (files && files.length > 0) {
-                                            file = files[0];
-
-                                            if (URL) {
-                                                done(URL.createObjectURL(file));
-                                            } else if (FileReader) {
-                                                reader = new FileReader();
-                                                reader.onload = function(e) {
-                                                    done(reader.result);
-                                                };
-                                                reader.readAsDataURL(file);
-                                            }
-                                        }
-                                        button.onclick = function() {
-
-                                            var croppedCanvas;
-                                            var roundedCanvas;
-                                            var roundedImage;
-
-                                            if (!croppable) {
-                                                return;
-                                            }
-
-                                            // Crop
-                                            croppedCanvas = cropper.getCroppedCanvas();
-
-                                            // Round
-                                            roundedCanvas = getRoundedCanvas(croppedCanvas);
-
-                                            // Show
-                                            roundedImage = document.createElement('img');
-
-                                            roundedImage.src = roundedCanvas.toDataURL()
-                                            result.innerHTML = '';
-                                            result.appendChild(roundedImage);
-                                        };
-                                    });
-                                </script>
                             </div>
                         </div>
 
@@ -168,7 +122,7 @@ if (!isset($_SESSION['user_id'])) {
                             <label for="Services" class="form-label">
                                 หมวดหมู่ที่ขอรับการบริจาค
                             </label>
-                            <select class="form-select style=" height:40px; name="personal_forward_catagories_id" required="">
+                            <select class="form-select style=" height:40px; name="org_rq_catagories_id" required="">
                                 <option selected="" value="" disabled="">โปรดเลือก</option>
                                 <option value="ส่งยา และ เวชภัณฑ์">ส่งยา และ เวชภัณฑ์</option>
                                 <option value="ช่วยเหลือผู้พิการ">ช่วยเหลือผู้พิการ</option>
@@ -239,30 +193,111 @@ if (!isset($_SESSION['user_id'])) {
                                 <br>
                             </div>
 
-
-
-
-                            <!--<div class="text-center">
-                    <label for="PhoneNumber" class="form-label">
-                        สถานะการบริจาค
-                    </label>
-                    <input type="text" class="form-control" style="height:40px;" name="personal_forward_status" required="">
-
-                </div>-->
-                            <!--<div class="col-md-12 mb-3">
-                    <label for="Email" class="form-label">
-                        ชื่อผู้บริจาค
-                    </label>
-                    <input type="name" class="form-control" style="height:40px;" name="name" required="">
-                </div>-->
                             <br>
                             <hr>
                             <div class="text-center">
-                                <button type="submit" id="submitButton" class="btn btn-warning rounded-pill">ส่งต่อ</button>
+                                <button type="submit" id="submitButton" class="btn btn-warning rounded-pill">โพสต์</button>
                             </div>
                     </form>
+                    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+                    <script>
+                        $("body").on("change", "#browse_image", function(e) {
+                            var files = e.target.files;
+                            var done = function(url) {
+                                $('#display_image_div').html('');
+                                $("#display_image_div").html('<img name="display_image_data" id="display_image_data" src="' + url + '" alt="Uploaded Picture">');
 
-                    
+                            };
+                            if (files && files.length > 0) {
+                                file = files[0];
+
+                                if (URL) {
+                                    done(URL.createObjectURL(file));
+                                } else if (FileReader) {
+                                    reader = new FileReader();
+                                    reader.onload = function(e) {
+                                        done(reader.result);
+                                    };
+                                    reader.readAsDataURL(file);
+                                }
+                            }
+                            button.onclick = function() {
+
+                                var croppedCanvas;
+                                var roundedCanvas;
+                                var roundedImage;
+
+                                if (!croppable) {
+                                    return;
+                                }
+
+                                // Crop
+                                croppedCanvas = cropper.getCroppedCanvas();
+
+                                // Round
+                                roundedCanvas = getRoundedCanvas(croppedCanvas);
+
+                                // Show
+                                roundedImage = document.createElement('img');
+
+                                roundedImage.src = roundedCanvas.toDataURL()
+                                result.innerHTML = '';
+                                result.appendChild(roundedImage);
+                            };
+                        });
+                    </script>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+                    <script type="text/javascript">
+                        $('#provinces').change(function() {
+                            var province_id = $(this).val();
+                            $.ajax({
+                                type: "POST",
+                                url: "../address/get_amphures.php",
+                                data: {
+                                    province_id: province_id,
+                                    function: 'province_id'
+                                },
+                                success: function(data) {
+                                    console.log(data);
+                                    $('#amphures').html(data)
+                                    $('#district').html('');
+                                    $('#zipcode').val('');
+                                }
+                            });
+                        });
+                        $('#amphures').change(function() {
+                            var amphures_id = $(this).val();
+                            $.ajax({
+                                url: "../address/get_districts.php",
+                                method: "POST",
+                                data: {
+                                    amphures_id: amphures_id,
+                                    function: 'amphures'
+                                },
+                                success: function(data) {
+                                    $('#district').html(data);
+                                    $('#zipcode').val('');
+                                }
+                            });
+                        });
+                        $('#district').change(function() {
+                            var district_id = $(this).val();
+                            $.ajax({
+                                url: "../address/get_zipcode.php",
+                                method: "POST",
+                                data: {
+                                    district_id: district_id,
+                                    function: 'district'
+                                },
+                                success: function(data) {
+                                    console.log(data);
+                                    $('#zipcode').val(data);
+                                }
+                            });
+                        });
+                    </script>
 
                 </div>
 

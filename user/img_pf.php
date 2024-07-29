@@ -4,7 +4,7 @@ require('../db_connect.php');
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: ../1page/login.php");
     exit();
 }
 
@@ -33,11 +33,13 @@ if (isset($_FILES['images'])) {
             if (move_uploaded_file($image_files['tmp_name'][$i], $image_path)) {
                 $image_paths[] = $image_path;
             } else {
-                echo "Error uploading file: " . $image_files['name'][$i];
+                $_SESSION['error'] = "เกิดข้อผิดพลาดในการอัปโหลดไฟล์:" . $image_files['name'][$i] ;
+                //echo "Error เกิดข้อผิดพลาดในการอัปโหลดไฟล์ file: " . $image_files['name'][$i];
                 exit;
             }
         } else {
-            echo "Unsupported file type: " . $extension;
+            $_SESSION['error'] = "ไม่รองรับประเภทไฟล์นี้:" . $extension ;
+            //echo "Unsupported file type: " . $extension;
             exit;
         }
     }

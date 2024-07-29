@@ -18,6 +18,7 @@ if (!isset($_SESSION['user_id'])) {
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <title>ส่งต่อ</title>
     <link rel="stylesheet" href="../font.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" />
     <?php if (isset($_SESSION['organization_name'])) {
 
         include('../org_header.php');
@@ -50,7 +51,6 @@ if (!isset($_SESSION['user_id'])) {
                             </span>
                         </p>
                     </div>
-                    <br>
 
                     <hr class="wp-block-separator sep-line is-style-wide">
                     <form action="../social/upload.php" method="post" enctype="multipart/form-data">
@@ -109,7 +109,7 @@ if (!isset($_SESSION['user_id'])) {
                                             <img name="display_image_data" id="display_image_data" src="dummy-image.png" alt="Picture">
                                         </div>
                                         <br>
-                                        <input type="file" name="images[]" id="personal_forward_img" class="form-control" multiple accept="image/*" maxlength="20" required>
+                                        <input type="file" name="images[]" id="personal_forward_img" class="form-control" multiple accept="image/*" required>
                                     </div>
                                 </div>
                                 <br>
@@ -215,7 +215,7 @@ if (!isset($_SESSION['user_id'])) {
                             <br>
                             <hr>
                             <div class="text-center">
-                                <button type="submit" <?php if (isset($_SESSION['organization_name'])) { ?> name="organization-forwards" ; <?php } else { ?> name="Personal-forwards" ; <?php } ?> id="submitButton" class="btn btn-warning rounded-pill">ส่งต่อ</button>
+                                <button type="submit" <?php if (isset($_SESSION['organization_name'])) { ?> name="organization-forwards" ; <?php } else { ?> name="Personal-forwards" ; <?php } ?> id="submitButton" class="btn btn-warning rounded-pill">โพสต์</button>
                             </div>
                     </form>
 
@@ -223,7 +223,7 @@ if (!isset($_SESSION['user_id'])) {
                     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
                     <script>
-                        $("body").on("change", "#browse_image", function(e) {
+                        $("body").on("change", "#images[]", function(e) {
                             var files = e.target.files;
                             var done = function(url) {
                                 $('#display_image_div').html('');

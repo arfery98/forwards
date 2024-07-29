@@ -32,7 +32,7 @@ session_start();
                                 ?>
                             </div>
                         <?php }; ?>
-                        <br>
+                        
                         <hr>
                         <div class="body">
                             <div class="mb-3">

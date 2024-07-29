@@ -15,7 +15,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="../1page/org_profile.php">ข้อมูลโครงการ</a></li>
-                            <li><a class="dropdown-item" href="../1page/org_edit_profile.php">แก้ไขข้อมูลโครงการ</a></li>
+                            <li><a class="dropdown-item" href="../1page/org_ps.php">แนะนำโครงการ</a></li>
                             <li><a class="dropdown-item" href="../1page/org_change_pass.php">แก้ไขรหัสผ่าน</a></li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -27,10 +27,10 @@
                             โพสต์การบริจาค
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="../1page/post.php">บุคคลประสงค์ส่งต่อ</a></li>
-                            <li><a class="dropdown-item" href="../1page/post.php">โครงการส่งต่อ</a></li>
-                            <li><a class="dropdown-item" href="../1page/post.php">ขอรับบริจาค</a></li>
-                            <li><a class="dropdown-item" href="../1page/post.php">ประชาสัมพันธ์</a></li>
+                            <li><a class="dropdown-item" href="../1page/post_1.php">บุคคลประสงค์ส่งต่อ</a></li>
+                            <li><a class="dropdown-item" href="../1page/post_2.php">องค์กรส่งต่อ</a></li>
+                            <li><a class="dropdown-item" href="../1page/post_3.php">ขอรับบริจาค</a></li>
+                            <li><a class="dropdown-item" href="../1page/post_4.php">ประชาสัมพันธ์</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -39,27 +39,28 @@
 
                     <?php
                     include('../db_connect.php');
-                    $sql = "SELECT * FROM `tb_organization` WHERE organization_verify = 'IP'";
-                    $result = $con->query($sql); ?>
-                    <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link " href="../1page/org_rq.php" role="button" aria-expanded="false">
-                                ขอรับบริจาค
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link " href="../1page/forwards.php" role="button" aria-expanded="false">
-                                ส่งต่อ
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link " href="#" role="button" aria-expanded="false">
-                                ประชาสัมพันธ์
-                            </a>
-                        </li>
-                    <?php } ?>
-
-
+                    $org_id = $_SESSION['organization_email'];
+                    $sql = "SELECT * FROM `tb_organization` WHERE organization_email = '$org_id' ";
+                    $result99 = $con->query($sql); ?>
+                    <?php while ($row = mysqli_fetch_assoc($result99)) { ?>
+                        <?php if ($row['organization_verify'] == 'IP') { ?>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link " href="../1page/org_rq.php" role="button" aria-expanded="false">
+                                    ขอรับบริจาค
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link " href="../1page/forwards.php" role="button" aria-expanded="false">
+                                    ส่งต่อ
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link " href="../1page/declares.php" role="button" aria-expanded="false">
+                                    ประชาสัมพันธ์
+                                </a>
+                            </li>
+                        <?php }  ?>
+                    <?php }  ?>
                 </ul>
             <?php } else { ?>
                 <span class="navbar-text">
@@ -78,8 +79,7 @@
                 <a class="btn btn-outline-danger rounded-pill" href="../user/org_logout.php" type="submit">ออกจากระบบ</a>
             <?php } else { ?>
                 <a href="../1page/org_login.php" class="btn btn-outline-primary rounded-pill" type="submit">เข้าสู่ระบบ</a>
-            <?php } ?>
-
             </div>
+        <?php } ?>
     </div>
 </nav>

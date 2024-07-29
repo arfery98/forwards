@@ -1,6 +1,7 @@
 <?php
 session_start();
 require('../db.php');
+require('../db_connect.php');
 
 if (!isset($_SESSION['organization_email'])) {
     header("Location: ../1page/org_login.php");
@@ -22,8 +23,9 @@ $user_orgData = $stmt->fetch(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <title>แก้ไขข้อมูลส่วนโครงการ</title>
+    <title>แก้ไขข้อมูลองค์กร</title>
     <link rel="stylesheet" href="../font.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" />
     <?php include('../org_header.php'); ?>
 </head>
 
@@ -35,48 +37,109 @@ $user_orgData = $stmt->fetch(PDO::FETCH_ASSOC);
             <div class="card" style="width: 80rem;">
                 <div class="card-body">
 
-                    <p class="fs-3">แก้ไขข้อมูลโครงการ</p>
+                    <p class="fs-3">แก้ไขข้อมูลองค์กร</p>
                     <hr><br>
+                    <center>
+                        <?php if (isset($_SESSION['organization_proflie'])) { ?>
+                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" height="180" class="d-inline-block align-text-middle rounded-circle">
+                            <?php } else {
+                            $images = json_decode($user_orgData['organization_proflie'], true);
+                            if (is_array($images)) {
+                                foreach ($images as $image) { ?>
+                                    <?php echo "<img src='../user/{$image}' alt='' height='180' class='d-inline-block align-text-middle '>" ?>
+                            <?php }
+                            } ?>
+                        <?php  } ?>
+                        <form method="POST">
+                            <?php if (isset($_SESSION['success'])) { ?>
 
+                                <div class="alert alert-success" role="alert">
+                                    <?php
+                                    echo $_SESSION['success'];
+                                    unset($_SESSION['success']);
+                                    ?>
+                                </div>
+                            <?php }; ?>
 
-                    <form action="" method="POST">
-                        <center>
+                            <?php if (isset($_SESSION['error'])) { ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <?php echo $_SESSION['error'];
+                                    unset($_SESSION['error']);
+                                    ?>
+                                </div>
+                            <?php }; ?>
+
                             <div class="text-center">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">อัพโหลดรูปภาพโครงการใหม่</h1>
+                                <button type="button" class="btn btn-outline-info rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    อัพโหลดรูปภาพ
+                                </button>
                             </div>
-                            <div class="modal-body">
-                                <style>
-                                    .text-center {
-                                        margin: 20px auto;
-                                        max-width: 640px;
-                                    }
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="text-end">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
-                                    img {
-                                        max-width: 100%;
-                                    }
-                                </style>
-                                <div class="row">
-                                    <div class="text-center" align="center">
-                                        <label>เลือกรูปภาพ</label>
-                                        <div id="display_image_div">
-                                            <img name="display_image_data" id="display_image_data" src="dummy-image.png" alt="Picture">
                                         </div>
-                                        <br>
-                                        <input type="file" name="browse_image" id="browse_image" class="form-control" multiple accept="image/*">
+                                        <div class="text-center">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">อัพโหลดรูปภาพ</h1>
+                                        </div>
+                                        <div class="modal-body">
+                                            <style>
+                                                .text-center {
+                                                    margin: 20px auto;
+                                                    max-width: 640px;
+                                                }
+                                                /* img {
+                                                max-width: 100%;
+                                            } */
+                                                .cropper-view-box,
+                                                .cropper-face {
+                                                    border-radius: 50%;
+                                                }
+
+                                                /* The css styles for `outline` do not follow `border-radius` on iOS/Safari (#979). */
+                                                .cropper-view-box {
+                                                    outline: 0;
+                                                    box-shadow: 0 0 0 1px #39f;
+                                                }
+                                            </style>
+                                            <div class="text-center">
+                                                <div class="row">
+                                                    <div class="col-lg-6" align="center">
+                                                        <label onclick="start_cropping()">เลือกรูปภาพ</label>
+                                                        <div id="display_image_div">
+                                                            <img name="display_image_data" id="display_image_data" src="dummy-image.png" alt="Picture">
+                                                        </div>
+                                                        <input type="hidden" name="cropped_image_data" id="cropped_image_data">
+                                                        <br>
+                                                        <input type="file" name="images" id="browse_image"="form-control" accept="image/*">
+
+                                                    </div>
+                                                    <div class="col-lg-6" align="center">
+                                                        <label>ดูรูปภาพ</label>
+                                                        <div id="cropped_image_result">
+                                                            <img style="width: 350px;" src="dummy-image.png" />
+                                                        </div>
+                                                        <br>
+                                                        <button type="button" class="btn btn-info" id="crop_button">ตัดภาพ</button>
+                                                        <button type="submit" class="btn btn-warning" id="upload_button" onclick="upload()">อัพโหลด</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <br>
-                                <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-                                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-                                <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
-
                             </div>
-                        </center>
+                        </form>
+                    </center>
 
-                    </form>
 
+                    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
                     <script>
-                        $("body").on("change", "#browse_image", function(e) {
+                        $("body").on("change", "#images", function(e) {
                             var files = e.target.files;
                             var done = function(url) {
                                 $('#display_image_div').html('');
@@ -120,11 +183,49 @@ $user_orgData = $stmt->fetch(PDO::FETCH_ASSOC);
                                 result.appendChild(roundedImage);
                             };
                         });
+
+                        function getRoundedCanvas(sourceCanvas) {
+                            var canvas = document.createElement('canvas');
+                            var context = canvas.getContext('2d');
+                            var width = sourceCanvas.width;
+                            var height = sourceCanvas.height;
+
+                            canvas.width = width;
+                            canvas.height = height;
+                            context.imageSmoothingEnabled = true;
+                            context.drawImage(sourceCanvas, 0, 0, width, height);
+                            context.globalCompositeOperation = 'destination-in';
+                            context.beginPath();
+                            context.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI, true);
+                            context.fill();
+                            return canvas;
+                        }
+
+                        function upload() {
+                            var base64data = $('#cropped_image_result img').attr('src');
+                            //alert(base64data);
+                            $.ajax({
+                                type: "POST",
+                                dataType: "json",
+                                url: "../user/crop_image_upload.php",
+                                data: {
+                                    image: base64data
+                                },
+                                success: function(response) {
+                                    if (response.status == true) {
+                                        alert(response.msg);
+                                    } else {
+                                        alert("Image not uploaded.");
+                                    }
+                                }
+                            });
+                        }
                     </script>
 
-                    <div class="container">
-                        <form action="../user/org_dashboard.php" method="POST">
+                    <div>
+                        <form action="../user/org_dashboard.php" method="POST" enctype="multipart/form-data">
                             <hr>
+                            <input type="hidden" name="organization_id" value="<?php echo $user_orgData['organization_id'];  ?>">
                             <div class="row">
                                 <div class="col">
                                     <label for="formGroupExampleInput" class="form-label">ชื่อโครงการ/องค์กรณ์</label>
@@ -132,7 +233,7 @@ $user_orgData = $stmt->fetch(PDO::FETCH_ASSOC);
                                 </div>
                                 <div class="col">
                                     <label for="formGroupExampleInput" class="form-label">Email</label>
-                                    <input type="text" class="form-control" id="formGroupExampleInput" name="organization_email" value="<?php echo $user_orgData['organization_email'];  ?>" disabled readonly>
+                                    <input type="text" class="form-control" id="formGroupExampleInput" name="organization_email" value="<?php echo $user_orgData['organization_email'];  ?>" readonly>
                                 </div>
                                 <div class="col">
                                     <label for="formGroupExampleInput" class="form-label">โทรศัพท์</label>
@@ -142,10 +243,25 @@ $user_orgData = $stmt->fetch(PDO::FETCH_ASSOC);
                             <br>
                             <div class="row">
                                 <div class="col">
-                                    <label for="formGroupExampleInput" class="form-label">เอกสารตรวจสอบโครงการ</label>
+
+                                    <label for="formGroupExampleInput" class="form-label">เอกสารตรวจสอบองค์กร : </label>
+                                    <?php if ($user_orgData['organization_verify'] == 'IP') { ?>
+                                        <span class="badge bg-success">ดำเนินการเสร็จสิ้น</span>
+                                    <?php } else { ?>
+                                        <span class="badge bg-warning text-dark">ยังไม่ดำเนินการ</span>
+                                        <br>
+                                        <input type="file" class="btn btn-outline-secondary" name="images" value="">
+                                    <?php } ?>
+                        
+                                    <!-- <input type="file" class="btn btn-outline-secondary" name="upload" value="ดำเนินการเสร็จสิ้น" readonly>  -->
+
                                     <!-- <form class="imgForm" action="--------------.php" method="post" enctype="multipart/form-data"> -->
-                                    <input type="file" class="btn btn-outline-secondary" name="upload">
                                     <!-- </form> -->
+
+                                    <!-- <label for="formGroupExampleInput" class="form-label">เอกสารตรวจสอบองค์กร</label>
+                                    
+                                    <p class="fs-6">ยังไม่ดำเนินการ</p> -->
+
                                 </div>
                             </div>
                             <hr>
@@ -205,14 +321,14 @@ $user_orgData = $stmt->fetch(PDO::FETCH_ASSOC);
                                 </div>
                                 <div class="col">
                                     <label for="formGroupExampleInput" class="form-label">รหัสไปรษณีย์</label>
-                                    <input type="text" class="form-control" id="zipcode" name="zipcode">
+                                    <input type="text" class="form-control" id="zipcode" name="zipcode" readonly>
                                 </div>
 
                             </div>
                             <br>
                             <div class="row text-end">
                                 <div class="col">
-                                    <button type="button" class="btn btn-danger rounded-pill">ยกเลิก</button>
+                                    <a href="org_profile.php" class="btn btn-danger rounded-pill">ยกเลิก</a>
                                     <button type="submit" class="btn btn-primary rounded-pill">แก้ไขข้อมูล</button>
                                 </div>
                             </div>
@@ -269,14 +385,10 @@ $user_orgData = $stmt->fetch(PDO::FETCH_ASSOC);
                             });
                         });
                     </script>
-
                 </div>
             </div>
         </div>
     </div>
-
-    </div>
-
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

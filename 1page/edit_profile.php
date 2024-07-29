@@ -24,6 +24,7 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <title>แก้ไขข้อมูลส่วนตัว</title>
     <link rel="stylesheet" href="../font.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" />
     <?php include('../header.php'); ?>
 </head>
 
@@ -43,12 +44,12 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                         <?php $images = json_decode($userData['user_profile'], true);
                         if (is_array($images)) {
                             foreach ($images as $image) { ?>
-                                <?php echo "<img src='../user/{$image}' alt='' height='180'f class='d-inline-block align-text-middle rounded-circle'>" ?>
+                                <?php echo "<img src='../user/{$image}' alt='' width='' height='250'f class='d-inline-block align-text-middle rounded-circle'>" ?>
                             <?php } ?>
                     <?php }
                     } ?>
                     <br>
-                    <form class="imgForm" action="../user/img_pf.php" method="post" enctype="multipart/form-data">
+                    <form action="../user/user_dashboard.php" method="post">
 
                         <?php if (isset($_SESSION['success'])) { ?>
 
@@ -69,22 +70,44 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                         <?php }; ?>
 
                         <div class="text-center">
-                            <button type="button" class="btn btn-outline-success rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 อัพโหลดรูปภาพ
                             </button>
                         </div>
-                        <br>
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-xl">
                                 <div class="modal-content">
                                     <div class="text-end">
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                        </button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
                                     </div>
                                     <div class="text-center">
                                         <h1 class="modal-title fs-5" id="exampleModalLabel">อัพโหลดรูปภาพ</h1>
                                     </div>
                                     <div class="modal-body">
+                                        <style>
+                                            .text-center {
+                                                margin: 20px auto;
+                                                max-width: 640px;
+                                            }
+
+                                            /* img {
+                                                max-width: 100%;
+                                                height: auto;
+                                                display: block;
+                                            } */
+
+                                            .cropper-view-box,
+                                            .cropper-face {
+                                                border-radius: 50%;
+                                            }
+
+                                            /* The css styles for `outline` do not follow `border-radius` on iOS/Safari (#979). */
+                                            .cropper-view-box {
+                                                outline: 0;
+                                                box-shadow: 0 0 0 1px #39f;
+                                            }
+                                        </style>
                                         <div class="text-center">
                                             <div class="row">
                                                 <div class="col-lg-6" align="center">
@@ -94,7 +117,7 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                                                     </div>
                                                     <input type="hidden" name="cropped_image_data" id="cropped_image_data">
                                                     <br>
-                                                    <input type="file" name="images[]" id="browse_image" class="form-control" accept="image/*">
+                                                    <input type="file" name="images[]" id="browse_image"="form-control" accept="image/*">
 
                                                 </div>
                                                 <div class="col-lg-6" align="center">
@@ -108,16 +131,16 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-success rounded-pill" data-bs-dismiss="modal">เสร็จสิ้น</button>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
                     </form>
 
                 </center>
+
 
                 <style>
                     .text-center {
@@ -139,12 +162,109 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                         box-shadow: 0 0 0 1px #39f;
                     }*/
                 </style>
-
                 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
                 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
                 <script>
-                    $("body").on("change", "#browse_image", function(e) {
+                    $("body").on("change", "#images[]", function(e) {
+                        var files = e.target.files;
+                        var done = function(url) {
+                            $('#display_image_div').html('');
+                            $("#display_image_div").html('<img name="display_image_data" id ="display_image_data" src="' + url + '" alt="Uploaded Picture">');
+
+                        };
+                        if (files && files.length > 0) {
+                            file = files[0];
+
+                            if (URL) {
+                                done(URL.createObjectURL(file));
+                            } else if (FileReader) {
+                                reader = new FileReader();
+                                reader.onload = function(e) {
+                                    done(reader.result);
+                                };
+                                reader.readAsDataURL(file);
+                            }
+                        }
+
+                        var image = document.getElementById('display_image_data');
+                        var button = document.getElementById('crop_button');
+                        var result = document.getElementById('cropped_image_result');
+                        var croppable = false;
+                        var cropper = new Cropper(image, {
+                            aspectRatio: 1,
+                            viewMode: 1,
+                            ready: function() {
+                                croppable = true;
+                            },
+                        });
+
+                        button.onclick = function() {
+
+                            var croppedCanvas;
+                            var roundedCanvas;
+                            var roundedImage;
+
+                            if (!croppable) {
+                                return;
+                            }
+
+                            // Crop
+                            croppedCanvas = cropper.getCroppedCanvas();
+
+                            // Round
+                            roundedCanvas = getRoundedCanvas(croppedCanvas);
+
+                            // Show
+                            roundedImage = document.createElement('img');
+
+                            roundedImage.src = roundedCanvas.toDataURL()
+                            result.innerHTML = '';
+                            result.appendChild(roundedImage);
+                        };
+                    });
+
+                    function getRoundedCanvas(sourceCanvas) {
+                        var canvas = document.createElement('canvas');
+                        var context = canvas.getContext('2d');
+                        var width = sourceCanvas.width;
+                        var height = sourceCanvas.height;
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        context.imageSmoothingEnabled = true;
+                        context.drawImage(sourceCanvas, 0, 0, width, height);
+                        context.globalCompositeOperation = 'destination-in';
+                        context.beginPath();
+                        context.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI, true);
+                        context.fill();
+                        return canvas;
+                    }
+
+                    function upload() {
+                        var base64data = $('#cropped_image_result img').attr('src');
+                        //alert(base64data);
+                        $.ajax({
+                            type: "POST",
+                            dataType: "json",
+                            url: "../user/crop_image_upload.php",
+                            data: {
+                                image: base64data
+                            },
+                            success: function(response) {
+                                if (response.status == true) {
+                                    alert(response.msg);
+                                } else {
+                                    alert("Image not uploaded.");
+                                }
+                            }
+                        });
+                    }
+                </script>
+
+
+                <script>
+                    /* $("body").on("change", "#browse_image", function(e) {
                         var files = e.target.files;
                         var done = function(url) {
                             $('#display_image_div').html('');
@@ -218,7 +338,7 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                         context.fill();
                         return canvas;
                     }
-
+ */
                     /*function upload() {
                         var base64data = $('#cropped_image_result img').attr('src');
                         //alert(base64data);

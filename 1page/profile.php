@@ -24,6 +24,7 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <title>ข้อมูลส่วนตัว</title>
     <link rel="stylesheet" href="../font.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" />
     <?php include('../header.php'); ?>
 </head>
 
@@ -41,12 +42,11 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                     <?php if (isset($_SESSION['user_profile'])) { ?>
                         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" height="180" class="d-inline-block align-text-middle rounded-circle">
 
-                        <?php
-                    } else {
+                        <?php  } else {
                         $images = json_decode($userData['user_profile'], true);
                         if (is_array($images)) {
                             foreach ($images as $image) { ?>
-                                <?php echo "<img src='../user/{$image}' alt='' height='180' class='d-inline-block align-text-middle '>" ?>
+                                <?php echo "<img src='../user/{$image}' alt='' height='180' class='d-inline-block align-text-middle rounded-circle'>" ?>
                         <?php }
                         } ?>
                     <?php  } ?>
@@ -144,7 +144,7 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
 
                         <div class="col">
                             <br>
-                            <a href="edit_profile.php" class="btn btn-warning rounded-pill">แก้ไขข้อมูล</a>
+                            <a href="edit_profile.php" class="btn btn-outline-secondary rounded-pill">แก้ไขข้อมูล</a>
                         </div>
                     </div>
                 </div>
