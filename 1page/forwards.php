@@ -88,6 +88,13 @@ if (!isset($_SESSION['user_id'])) {
                                 <textarea class="form-control" rows="3" name="personal_forward_detail" required></textarea>
                             </div>
 
+                            <div class="col-md-12 mb-3">
+                                <label for="Email" class="form-label">
+                                    ข้อมูลการติดต่อ
+                                </label>
+                                <input type="text" class="form-control" style="height:40px;" name="personal_forward_ib" placeholder="โปรดกรอกลิงค์ข้อมูลการติดต่อ เช่น ลิงค์โปรไฟล์เฟสบุ๊ค" required>
+                            </div>
+
                             <div class="text-center">
                                 <h1 class="modal-title fs-5" id="exampleModalLabel">อัพโหลดรูปภาพสิ่งของ</h1>
                             </div>
@@ -196,22 +203,6 @@ if (!isset($_SESSION['user_id'])) {
                             </div>
                             </label>
 
-
-
-
-                            <!--<div class="text-center">
-                    <label for="PhoneNumber" class="form-label">
-                        สถานะการบริจาค
-                    </label>
-                    <input type="text" class="form-control" style="height:40px;" name="personal_forward_status" required="">
-
-                </div>-->
-                            <!--<div class="col-md-12 mb-3">
-                    <label for="Email" class="form-label">
-                        ชื่อผู้บริจาค
-                    </label>
-                    <input type="name" class="form-control" style="height:40px;" name="name" required="">
-                </div>-->
                             <br>
                             <hr>
                             <div class="text-center">
@@ -223,12 +214,11 @@ if (!isset($_SESSION['user_id'])) {
                     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
                     <script>
-                        $("body").on("change", "#images[]", function(e) {
+                        $("body").on("change", "#images", function(e) {
                             var files = e.target.files;
                             var done = function(url) {
                                 $('#display_image_div').html('');
                                 $("#display_image_div").html('<img name="display_image_data" id="display_image_data" src="' + url + '" alt="Uploaded Picture">');
-
                             };
                             if (files && files.length > 0) {
                                 file = files[0];

@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' ) {
     $org_ad_districts = $_POST['districts'];
 
     $stmt1 = $conn->prepare("SELECT * FROM districts WHERE id = :id");
-    $stmt1->bindParam(':id', $user_ad_districts);
+    $stmt1->bindParam(':id', $org_ad_districts);
     $stmt1->execute();
     $rows = $stmt1->fetch(PDO::FETCH_ASSOC);
     $user_ad_districts_name = $rows['name_th'];
@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' ) {
             $organization_name = $_SESSION['organization_name'];
 
             $sql = "INSERT INTO tb_org_rq(org_rq_user, org_rq_name, org_rq_detail, org_rq_img, org_rq_catagories_id, org_ad_no, org_ad_village, org_ad_groubs, org_ad_buildings, org_ad_alleys, org_ad_roads, org_ad_provinces, org_ad_amphures, org_ad_districts, org_ad_zipcode, org_rq_status) 
-            VALUES ('$organization_name','$org_rq_name','$org_rq_detail','$org_rq_img','$org_rq_catagories_id','$org_ad_no','$org_ad_village','$org_ad_groubs','$org_ad_buildings','$org_ad_alleys','$org_ad_roads','$org_ad_provinces','$org_ad_amphures','$org_ad_districts','$org_ad_zipcode','$org_rq_status')";
+            VALUES ('$organization_name','$org_rq_name','$org_rq_detail','$org_rq_img','$org_rq_catagories_id','$org_ad_no','$org_ad_village','$org_ad_groubs','$org_ad_buildings','$org_ad_alleys','$org_ad_roads','$org_ad_provinces','$org_ad_amphures','$user_ad_districts_name','$org_ad_zipcode','$org_rq_status')";
             $result = mysqli_query($con, $sql);
             
             if ($result) {

@@ -84,6 +84,8 @@
 
                 <div class="navbar-nav ms-auto mb-2 mb-lg-0">
 
+                
+
                     <?php if (isset($_SESSION['user_id'])) { ?>
                         <span class="navbar-text">
                             ยินดีต้องรับคุณ <?php echo $_SESSION['user_name']  . ' ' . $_SESSION['user_lastname']; ?> &nbsp;
