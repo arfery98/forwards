@@ -51,16 +51,9 @@ if (isset($_GET['org_rq_id'])) {
             <div class="card-body">
                 <?php if (isset($_GET['personal_forward_id'])) { ?>
                     <?php while ($row = mysqli_fetch_assoc($result1)) { ?>
-
-
-
                         <div class="row">
-
                             <div id="carouselExample" class="carousel slide">
-                                <?php $images = json_decode($row['personal_forward_img'], true);
-                                //if (is_array($images)) { 
-                                ?>
-
+                                <?php $images = json_decode($row['personal_forward_img'], true); ?>
 
                                 <div class="carousel-inner">
                                     <?php if (is_array($images) && count($images) > 0) : ?>
@@ -140,11 +133,52 @@ if (isset($_GET['org_rq_id'])) {
                         </div>
                         <hr>
 
-                        <?php if (isset($_SESSION['organization_name'])) { ?>
-                            <center>
-                                <button type="button" class="btn btn-outline-success rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">ขอรับสิ่งของ</button>
-                            </center>
-                        <?php }  ?>
+
+                        <center>
+                            <button type="button" class="btn btn-outline-success rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="">ขอรับสิ่งของ</button>
+                        </center>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">ดำเนินการขอรับสิ่งของ</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form action="../social/give.php" method="POST">
+                                        <input type="hidden" name="history_forwards_user" value="<?php echo $_SESSION['user_id'] ?>">
+                                        <input type="hidden" name="history_forwards_org" value="<?php echo $_SESSION['organization_email'] ?>">
+                                        <input type="hidden" name="personal_forward_id" value="<?php echo $personal_forward_id ?>">
+                                        <div class="modal-body">
+                                            <p>กรุณากรอกมูลการติดต่อ</p>
+                                            <div class="mb-3">
+                                                <label for="recipient-name" class="col-form-label">ชื่อ-นามสกุล:</label>
+                                                <input type="text" class="form-control" id="recipient-name" name="history_forwards_name" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="recipient-name" class="col-form-label">เหตุผล:</label>
+                                                <input type="text" class="form-control" id="recipient-name" name="history_forwards_detail" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="recipient-name" class="col-form-label">การติดต่อ:</label>
+                                                <input type="text" class="form-control" id="recipient-name" name="history_forward_ct" placeholder="ไอดีไลน์,เฟสบุ๊ค,เบอร์โทร" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="recipient-name" class="col-form-label">ที่อยู่:</label>
+                                                <input type="text" class="form-control" id="recipient-name" name="history_forwards_location" required>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">ยกเลิก</button>
+                                            <button type="submit" class="btn btn-primary rounded-pill" name="submit_personal">ส่งการขอรับ</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+
+
 
                     <?php  } ?>
                 <?php } ?>
@@ -234,11 +268,50 @@ if (isset($_GET['org_rq_id'])) {
                         </div>
                         <hr>
 
-                        <?php if (isset($_SESSION['organization_name'])) { ?>
-                            <center>
-                                <button type="button" class="btn btn-outline-success rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">ขอรับสิ่งของ</button>
-                            </center>
-                        <?php }  ?>
+
+                        <center>
+                            <button type="button" class="btn btn-outline-success rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="">ขอรับสิ่งของ</button>
+                        </center>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">ดำเนินการขอรับสิ่งของ</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form action="../social/give.php" method="POST">
+                                        <input type="hidden" name="history_forwards_user" value="<?php echo $_SESSION['user_id'] ?>">
+                                        <input type="hidden" name="history_forwards_org" value="<?php echo $_SESSION['organization_email'] ?>">
+                                        <input type="hidden" name="organization_forward_id" value="<?php echo $organization_forward_id ?>">
+                                        <div class="modal-body">
+                                            <p>กรุณากรอกมูลการติดต่อ</p>
+                                            <div class="mb-3">
+                                                <label for="recipient-name" class="col-form-label">ชื่อ-นามสกุล:</label>
+                                                <input type="text" class="form-control" id="recipient-name" name="history_forwards_name" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="recipient-name" class="col-form-label">เหตุผล:</label>
+                                                <input type="text" class="form-control" id="recipient-name" name="history_forwards_detail" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="recipient-name" class="col-form-label">การติดต่อ:</label>
+                                                <input type="text" class="form-control" id="recipient-name" name="history_forward_ct" placeholder="ไอดีไลน์,เฟสบุ๊ค,เบอร์โทร" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="recipient-name" class="col-form-label">ที่อยู่:</label>
+                                                <input type="text" class="form-control" id="recipient-name" name="history_forwards_location" required>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">ยกเลิก</button>
+                                            <button type="submit" class="btn btn-primary rounded-pill" name="submit_org">ส่งการขอรับ</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
 
                     <?php  } ?>
                 <?php } ?>
@@ -321,6 +394,32 @@ if (isset($_GET['org_rq_id'])) {
                             </div>
                         </div>
                         <hr>
+                        <center>
+                            <button type="button" class="btn btn-outline-success rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="">ส่งต่อสิ่งของ</button>
+                        </center>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">ดำเนินการส่งต่อสิ่งของ</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="" method="POST">
+                                            <p>กรุณากรอกลิ้งค์การติดต่อ เช่น ลิงค์โปรไฟล์เฟสบุ๊ค ลิ้งค์เพิ่มเพื่อนไลน์</p>
+                                            <div class="mb-3">
+                                                <label for="recipient-name" class="col-form-label">ลิงค์:</label>
+                                                <input type="text" class="form-control" id="recipient-name" name="" required>
+                                            </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary rounded-pill">Send message</button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     <?php  } ?>
                 <?php } ?>
 

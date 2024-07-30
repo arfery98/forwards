@@ -50,7 +50,7 @@ $user_orgData = $stmt->fetch(PDO::FETCH_ASSOC);
                             <?php }
                             } ?>
                         <?php  } ?>
-                        <form method="POST">
+                        <!-- <form method="POST" enctype="multipart/form-data">
                             <?php if (isset($_SESSION['success'])) { ?>
 
                                 <div class="alert alert-success" role="alert">
@@ -68,6 +68,7 @@ $user_orgData = $stmt->fetch(PDO::FETCH_ASSOC);
                                     ?>
                                 </div>
                             <?php }; ?>
+                            
 
                             <div class="text-center">
                                 <button type="button" class="btn btn-outline-info rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -90,6 +91,7 @@ $user_orgData = $stmt->fetch(PDO::FETCH_ASSOC);
                                                     margin: 20px auto;
                                                     max-width: 640px;
                                                 }
+
                                                 /* img {
                                                 max-width: 100%;
                                             } */
@@ -131,6 +133,78 @@ $user_orgData = $stmt->fetch(PDO::FETCH_ASSOC);
                                     </div>
                                 </div>
                             </div>
+                        </form> -->
+                        <div class="text-center">
+                            <?php if (isset($_SESSION['organization_proflie'])) { ?>
+
+                                <?php $images = json_decode($user_orgData['organization_proflie'], true);
+                                if (is_array($images)) {
+                                    foreach ($images as $image) { ?>
+                                        <?php echo "<img src='../user/{$image}' alt='' height='180' class='d-inline-block align-text-middle rounded-circle'>" ?>
+                                    <?php } ?>
+                                <?php  } ?>
+                            <?php } else { ?>
+                                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" height="180" class="d-inline-block align-text-middle rounded-circle">
+                            <?php  } ?>
+                            <center>
+                                <button type="button" class="btn btn-outline-info rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    อัพโหลดรูปภาพ
+                                </button>
+                            </center>
+                        </div>
+
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <div class="text-end">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="text-center">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">อัพโหลดรูปภาพ</h1>
+                                    </div>
+                                    <div class="modal-body">
+                                        <style>
+                                            .text-center {
+                                                margin: 20px auto;
+                                                max-width: 640px;
+                                            }
+
+                                            .cropper-view-box,
+                                            .cropper-face {
+                                                border-radius: 50%;
+                                            }
+
+                                            .cropper-view-box {
+                                                outline: 0;
+                                                box-shadow: 0 0 0 1px #39f;
+                                            }
+                                        </style>
+                                        <div class="text-center">
+                                            <div class="row">
+                                                <div class="col-lg-6" align="center">
+                                                    <label>เลือกรูปภาพ</label>
+                                                    <div id="display_image_div">
+                                                        <img name="display_image_data" id="display_image_data" src="dummy-image.png" alt="Picture">
+                                                    </div>
+                                                    <input type="hidden" name="cropped_image_data" id="cropped_image_data">
+                                                    <br>
+                                                    <input type="file" name="images" id="browse_image" class="form-control" accept="image/*">
+                                                </div>
+                                                <div class="col-lg-6" align="center">
+                                                    <label>ดูรูปภาพ</label>
+                                                    <div id="cropped_image_result">
+                                                        <img style="width: 350px;" src="dummy-image.png" />
+                                                    </div>
+                                                    <br>
+                                                    <button type="button" class="btn btn-info" id="crop_button">ตัดภาพ</button>
+                                                    <button type="submit" class="btn btn-warning" id="upload_button">อัพโหลด</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         </form>
                     </center>
 
@@ -139,13 +213,22 @@ $user_orgData = $stmt->fetch(PDO::FETCH_ASSOC);
                     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
                     <script>
-                        $("body").on("change", "#images", function(e) {
+                        var cropper;
+                        var croppable = false;
+
+                        $("#browse_image").change(function(e) {
                             var files = e.target.files;
                             var done = function(url) {
-                                $('#display_image_div').html('');
-                                $("#display_image_div").html('<img name="display_image_data" id="display_image_data" src="' + url + '" alt="Uploaded Picture">');
-
+                                $('#display_image_div').html('<img name="display_image_data" id="display_image_data" src="' + url + '" alt="Uploaded Picture">');
+                                cropper = new Cropper(document.getElementById('display_image_data'), {
+                                    aspectRatio: 1,
+                                    viewMode: 1,
+                                    ready: function() {
+                                        croppable = true;
+                                    }
+                                });
                             };
+
                             if (files && files.length > 0) {
                                 file = files[0];
 
@@ -159,54 +242,36 @@ $user_orgData = $stmt->fetch(PDO::FETCH_ASSOC);
                                     reader.readAsDataURL(file);
                                 }
                             }
-                            button.onclick = function() {
-
-                                var croppedCanvas;
-                                var roundedCanvas;
-                                var roundedImage;
-
-                                if (!croppable) {
-                                    return;
-                                }
-
-                                // Crop
-                                croppedCanvas = cropper.getCroppedCanvas();
-
-                                // Round
-                                roundedCanvas = getRoundedCanvas(croppedCanvas);
-
-                                // Show
-                                roundedImage = document.createElement('img');
-
-                                roundedImage.src = roundedCanvas.toDataURL()
-                                result.innerHTML = '';
-                                result.appendChild(roundedImage);
-                            };
                         });
 
-                        function getRoundedCanvas(sourceCanvas) {
-                            var canvas = document.createElement('canvas');
-                            var context = canvas.getContext('2d');
-                            var width = sourceCanvas.width;
-                            var height = sourceCanvas.height;
+                        $("#crop_button").click(function() {
+                            if (!croppable) {
+                                return;
+                            }
+                            var croppedCanvas;
+                            var roundedCanvas;
+                            var roundedImage;
 
-                            canvas.width = width;
-                            canvas.height = height;
-                            context.imageSmoothingEnabled = true;
-                            context.drawImage(sourceCanvas, 0, 0, width, height);
-                            context.globalCompositeOperation = 'destination-in';
-                            context.beginPath();
-                            context.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI, true);
-                            context.fill();
-                            return canvas;
-                        }
+                            // Crop
+                            croppedCanvas = cropper.getCroppedCanvas();
+
+                            // Show
+                            roundedImage = document.createElement('img');
+                            roundedImage.src = croppedCanvas.toDataURL();
+                            $('#cropped_image_result').html(roundedImage);
+
+                            $('#cropped_image_data').val(roundedImage.src);
+                        });
+
+                        $("form").submit(function(e) {
+                            e.preventDefault();
+                            upload();
+                        });
 
                         function upload() {
-                            var base64data = $('#cropped_image_result img').attr('src');
-                            //alert(base64data);
+                            var base64data = $('#cropped_image_data').val();
                             $.ajax({
                                 type: "POST",
-                                dataType: "json",
                                 url: "../user/crop_image_upload.php",
                                 data: {
                                     image: base64data
@@ -214,6 +279,7 @@ $user_orgData = $stmt->fetch(PDO::FETCH_ASSOC);
                                 success: function(response) {
                                     if (response.status == true) {
                                         alert(response.msg);
+                                        location.reload();
                                     } else {
                                         alert("Image not uploaded.");
                                     }
@@ -252,7 +318,7 @@ $user_orgData = $stmt->fetch(PDO::FETCH_ASSOC);
                                         <br>
                                         <input type="file" class="btn btn-outline-secondary" name="images" value="">
                                     <?php } ?>
-                        
+
                                     <!-- <input type="file" class="btn btn-outline-secondary" name="upload" value="ดำเนินการเสร็จสิ้น" readonly>  -->
 
                                     <!-- <form class="imgForm" action="--------------.php" method="post" enctype="multipart/form-data"> -->

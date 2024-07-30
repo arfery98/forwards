@@ -56,7 +56,16 @@ $result_1 = mysqli_query($con, $sql);
                                         <td><?php echo $row["organization_name"]; ?></td>
                                         <td><?php echo $row["organization_phone"]; ?></td>
                                         <td><?php echo $row["organization_email"]; ?></td>
-                                        <td><?php echo $row["organization_ad_no"]; ?></td>
+                                        <td><?php echo $row["organization_ad_no"]; ?>&nbsp;
+                                            <?php echo $row["organization_ad_village"]; ?>&nbsp;
+                                            <?php echo $row["organization_ad_groubs"]; ?>&nbsp;
+                                            <?php echo $row["organization_ad_buildings"]; ?>&nbsp;
+                                            <?php echo $row["organization_ad_alleys"]; ?>&nbsp;
+                                            <?php echo $row["organization_ad_roads"]; ?>&nbsp;
+                                            <?php echo $row["organization_ad_provinces"]; ?>&nbsp;
+                                            <?php echo $row["organization_ad_amphures"]; ?>&nbsp;
+                                            <?php echo $row["organization_ad_districts"]; ?>&nbsp;
+                                            <?php echo $row["organization_ad_zipcode"]; ?>&nbsp;</td>
                                         <td>
 
                                             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $row["organization_id"]; ?>">
@@ -89,7 +98,7 @@ $result_1 = mysqli_query($con, $sql);
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
 
-                                                    <div class="modal-body">                                            
+                                                    <div class="modal-body">
                                                         <img alt='' class='img-thumbnail' src='../user/<?php echo $row["organization_comfirm"] ?>'>
 
                                                     </div>

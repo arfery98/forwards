@@ -59,6 +59,11 @@
                                     ประชาสัมพันธ์
                                 </a>
                             </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link " href="../1page/check_get2.php" role="button" aria-expanded="false">
+                                    เช็คการบริจาค
+                                </a>
+                            </li>
                         <?php }  ?>
                     <?php }  ?>
                 </ul>

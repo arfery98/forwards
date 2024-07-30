@@ -11,7 +11,7 @@ require('../db_connect.php');
 
 session_start();
 
-$user_id = $_SESSION['user_id'];
+//$user_id = $_SESSION['user_id'];
 
 
 /* $image_parts = explode(";base64,", $_POST['image']);
@@ -241,12 +241,18 @@ if (isset($_POST['image']) || isset($_FILES['images'])) {
 
     // If images were successfully uploaded
     if (!empty($image_paths)) {
-        $user_profile = json_encode($image_paths);
+        $organization_proflie = json_encode($image_paths);
+
+        $organization_email = $_SESSION['organization_email'];
 
         // Assuming $conn is your PDO connection and $user_id is defined
-        $stmt = $conn->prepare("UPDATE tb_users SET user_profile = :user_profile WHERE user_id = :user_id");
+        /* $stmt = $conn->prepare("UPDATE tb_users SET user_profile = :user_profile WHERE user_id = :user_id");
         $stmt->bindParam(":user_id", $user_id, PDO::PARAM_STR);
-        $stmt->bindParam(":user_profile", $user_profile, PDO::PARAM_STR);
+        $stmt->bindParam(":user_profile", $user_profile, PDO::PARAM_STR); */
+
+        $stmt = $conn->prepare("UPDATE tb_users SET organization_proflie = :organization_proflie WHERE organization_email = :organization_email");
+        $stmt->bindParam(":organization_email", $organization_email, PDO::PARAM_STR);
+        $stmt->bindParam(":organization_proflie", $organization_proflie, PDO::PARAM_STR);
 
         if ($stmt->execute()) {
             $_SESSION['success'] = "Images uploaded successfully!";

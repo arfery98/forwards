@@ -28,19 +28,12 @@ if (!isset($_SESSION['user_id'])) {
 </head>
 
 <body style="background:#e7f4ff">
+    <img alt="..." class="d-block w-100" src="../image/fw_cvover.jpg">
+
     <div class="container">
-        <form>
-            <br>
-            <div class="carousel-inner">
-                <img alt="..." class="d-block w-100" src="file:///C:/Downloads/forwardwe%20(3).jpg">
-            </div>
-            <br>
 
-        </form>
 
-        <!-- FOR -->
         <br>
-
         <!-- NAME-->
 
         <section class="about section-padding" id="about">
@@ -58,9 +51,9 @@ if (!isset($_SESSION['user_id'])) {
 
 
 
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-                <script src="https://www.google.com/recaptcha/api.js" async="" defer=""></script>
+                <script src="https://www.google.com/recaptcha/api.js" async="" defer=""></script> -->
 
                 <div class="center">
                     <form id="contactForm" action="../social/upload_ift.php" method="POST" enctype="multipart/form-data">
@@ -109,9 +102,9 @@ if (!isset($_SESSION['user_id'])) {
                                 <div class="row">
                                     <div class="text-center" align="center">
                                         <label>เลือกรูปภาพ</label>
-                                        <div id="display_image_div">
+                                        <!-- <div id="display_image_div">
                                             <img name="display_image_data" id="display_image_data" src="dummy-image.png" alt="Picture">
-                                        </div>
+                                        </div> -->
                                         <br>
                                         <input type="file" name="images[]" id="browse_image" class="form-control" multiple accept="image/*">
                                     </div>
@@ -170,8 +163,10 @@ if (!isset($_SESSION['user_id'])) {
                 <!-- NAME-->
             </div>
         </section>
+        <br>
+    </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 
 </html>

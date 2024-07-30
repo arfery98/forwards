@@ -1,6 +1,7 @@
 <?php
 session_start();
 require('../db.php');
+require('../db_connect.php');
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../1page/login.php");
@@ -10,6 +11,7 @@ $stmt = $conn->prepare("SELECT * FROM tb_users WHERE user_id = :user_id");
 $stmt->bindParam(":user_id", $_SESSION['user_id']);
 $stmt->execute();
 $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+
 
 ?>
 
@@ -37,18 +39,16 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                 <p class="fs-3">แก้ไขข้อมูลส่วนตัว</p>
                 <hr>
                 <center>
-                    <?php if (isset($_SESSION['user_profile'])) { ?>
-                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" height="180" class="d-inline-block align-text-middle rounded-circle">
-
-                    <?php } else { ?>
-                        <?php $images = json_decode($userData['user_profile'], true);
-                        if (is_array($images)) {
-                            foreach ($images as $image) { ?>
-                                <?php echo "<img src='../user/{$image}' alt='' width='' height='250'f class='d-inline-block align-text-middle rounded-circle'>" ?>
-                            <?php } ?>
-                    <?php }
-                    } ?>
-                    <br>
+                    <?php //if ($userData['user_profile'] == '') { ?>
+                        <!-- <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" height="180" class="d-inline-block align-text-middle rounded-circle"> -->
+                    <?php // } else { ?>
+                        <?php //$images = $userData['user_profile'];
+                        //if (is_array($images)) {
+                            //foreach ($images as $image) { ?>
+                                <?php // echo "<img src='../user/{$image}' alt='' width='' height='250'f class='d-inline-block align-text-middle rounded-circle'>" ?>
+                            <?php // } ?>
+                    <?php // }   } ?>
+                    
                     <form action="../user/user_dashboard.php" method="post">
 
                         <?php if (isset($_SESSION['success'])) { ?>
@@ -69,7 +69,7 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                             </div>
                         <?php }; ?>
 
-                        <div class="text-center">
+                        <!-- <div class="text-center">
                             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 อัพโหลดรูปภาพ
                             </button>
@@ -91,11 +91,11 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                                                 max-width: 640px;
                                             }
 
-                                            /* img {
+                                             /* img {
                                                 max-width: 100%;
                                                 height: auto;
                                                 display: block;
-                                            } */
+                                            }  */
 
                                             .cropper-view-box,
                                             .cropper-face {
@@ -117,7 +117,7 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                                                     </div>
                                                     <input type="hidden" name="cropped_image_data" id="cropped_image_data">
                                                     <br>
-                                                    <input type="file" name="images[]" id="browse_image"="form-control" accept="image/*">
+                                                    <input type="file" name="images" id="browse_image"="form-control" accept="image/*">
 
                                                 </div>
                                                 <div class="col-lg-6" align="center">
@@ -137,13 +137,13 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </form> -->
 
                 </center>
 
 
                 <style>
-                    .text-center {
+                    /* .text-center {
                         margin: 20px auto;
                         max-width: 640px;
                     }
@@ -155,18 +155,18 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                     .cropper-view-box,
                     .cropper-face {
                         border-radius: 50%;
-                    }
+                    } */
 
                     /*The css styles for outline do not follow border-radius on iOS/Safari (#979).  .cropper-view-box {
                         outline: 0;
                         box-shadow: 0 0 0 1px #39f;
                     }*/
                 </style>
-                <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+                <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
                 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script> -->
                 <script>
-                    $("body").on("change", "#images[]", function(e) {
+                    /* $("body").on("change", "#images", function(e) {
                         var files = e.target.files;
                         var done = function(url) {
                             $('#display_image_div').html('');
@@ -239,106 +239,8 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                         context.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI, true);
                         context.fill();
                         return canvas;
-                    }
+                    } */
 
-                    function upload() {
-                        var base64data = $('#cropped_image_result img').attr('src');
-                        //alert(base64data);
-                        $.ajax({
-                            type: "POST",
-                            dataType: "json",
-                            url: "../user/crop_image_upload.php",
-                            data: {
-                                image: base64data
-                            },
-                            success: function(response) {
-                                if (response.status == true) {
-                                    alert(response.msg);
-                                } else {
-                                    alert("Image not uploaded.");
-                                }
-                            }
-                        });
-                    }
-                </script>
-
-
-                <script>
-                    /* $("body").on("change", "#browse_image", function(e) {
-                        var files = e.target.files;
-                        var done = function(url) {
-                            $('#display_image_div').html('');
-                            $("#display_image_div").html('<img name="display_image_data" id="display_image_data" src="' + url + '" alt="Uploaded Picture">');
-
-                        };
-                        if (files && files.length > 0) {
-                            file = files[0];
-
-                            if (URL) {
-                                done(URL.createObjectURL(file));
-                            } else if (FileReader) {
-                                reader = new FileReader();
-                                reader.onload = function(e) {
-                                    done(reader.result);
-                                };
-                                reader.readAsDataURL(file);
-                            }
-                        }
-
-                        var image = document.getElementById('display_image_data');
-                        var button = document.getElementById('crop_button');
-                        var result = document.getElementById('cropped_image_result');
-                        var croppable = false;
-                        var cropper = new Cropper(image, {
-                            aspectRatio: 1,
-                            viewMode: 1,
-                            ready: function() {
-                                croppable = true;
-                            },
-                        });
-
-                        button.onclick = function() {
-
-                            var croppedCanvas;
-                            var roundedCanvas;
-                            var roundedImage;
-
-                            if (!croppable) {
-                                return;
-                            }
-
-                            // Crop
-                            croppedCanvas = cropper.getCroppedCanvas();
-
-                            // Round
-                            roundedCanvas = getRoundedCanvas(croppedCanvas);
-
-                            // Show
-                            roundedImage = document.createElement('img');
-
-                            roundedImage.src = roundedCanvas.toDataURL()
-                            result.innerHTML = '';
-                            result.appendChild(roundedImage);
-                        };
-                    });
-
-                    function getRoundedCanvas(sourceCanvas) {
-                        var canvas = document.createElement('canvas');
-                        var context = canvas.getContext('2d');
-                        var width = sourceCanvas.width;
-                        var height = sourceCanvas.height;
-
-                        canvas.width = width;
-                        canvas.height = height;
-                        context.imageSmoothingEnabled = true;
-                        context.drawImage(sourceCanvas, 0, 0, width, height);
-                        context.globalCompositeOperation = 'destination-in';
-                        context.beginPath();
-                        context.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI, true);
-                        context.fill();
-                        return canvas;
-                    }
- */
                     /*function upload() {
                         var base64data = $('#cropped_image_result img').attr('src');
                         //alert(base64data);
@@ -359,9 +261,7 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                         });
                     }*/
                 </script>
-
-
-                <hr>
+               
                 <form action="../user/user_dashboard.php" method="POST">
                     <?php if (isset($_SESSION['success'])) { ?>
 

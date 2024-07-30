@@ -42,7 +42,7 @@ $user_orgData = $stmt->fetch(PDO::FETCH_ASSOC);
                     <p class="fs-5">แนะนำโครงการ</p>
                     <div class="col">
                         <label for="formGroupExampleInput" class="form-label">รายละเอียดข้อมูล</label>
-                        <input type="text" class="form-control" id="formGroupExampleInput" readonly>
+                        <input type="text" class="form-control" id="formGroupExampleInput" value="<?php echo $user_orgData['organization_bio'];  ?>" readonly>
                         <br>
                     </div>
                 </div>
@@ -50,6 +50,14 @@ $user_orgData = $stmt->fetch(PDO::FETCH_ASSOC);
                 <hr>
                 <h1 class="modal-title fs-5" id="exampleModalLabel">รูปภาพเพื่อแนะนำองค์กร</h1>
                 <div class="modal-body">
+                    <?php $images = json_decode($user_orgData['organization_img'], true);
+                    if (is_array($images)) {
+                        foreach ($images as $image) { ?>
+                            <div class="text center">
+                                <?php echo "<img alt='' class='img-thumbnail' src='../user/{$image}'>"; ?>
+                            </div>
+                        <?php } ?>
+                    <?php } ?>
                     <style>
                         .text-center {
                             margin: 20px auto;
@@ -60,15 +68,6 @@ $user_orgData = $stmt->fetch(PDO::FETCH_ASSOC);
                             max-width: 100%;
                         }
                     </style>
-                    <div class="row">
-                        <div class="text-center" align="center">
-                            <label></label>
-                            <div id="display_image_div">
-                                <img name="display_image_data" id="display_image_data" src="dummy-image.png" alt="Picture">
-                            </div>
-                            <br>
-                        </div>
-                    </div>
                     <br>
 
                 </div>

@@ -94,17 +94,29 @@ $result_4 = $con->query($sql_4);
         <!-- about section Ends -->
 
         <br>
-        <div class="card" style="width: 80rem;"><!-- โพสต์ส่งองค์กร -->
-            <br>
-            <section class="portfolio section-padding" id="portfolio">
-                <p class="fs-2">โพสต์บริจาคขององค์กร</p>
-                <div class="card-body">
+        <div class="card" style="width: 80rem;"> <!-- โพสต์ส่งองค์กร -->
+            <div class="card-body">
+                <section class="portfolio section-padding" id="portfolio">
                     <div class="text-center">
                         <div class="row">
-                            <?php while ($row = mysqli_fetch_assoc($result2)) { ?>
-                                <div class="col-12 col-md-12 col-lg-4">
-                                    <div class="card text-light text-center bg-white pb-2 " style="width: 25rem; height: auto;">
-                                        <div class="card-body text-dark">
+                            <div class="text-center">
+                                <p class="fs-1"> ส่งต่อสิ่งของ </p>
+                                <p class="fs-3"> องค์กรประสงค์ที่จะให้ </p>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    <p class="fs-2">โพสต์บริจาคขององค์กร</p>
+                    <br>
+                    <div class="row">
+                        <?php while ($row = mysqli_fetch_assoc($result2)) { ?>
+
+                            <div class="col-12 col-md-12 col-lg-4">
+                                <br>
+                                <div class="card text-light text-center bg-white pb-2" style="width: 25rem; height: auto;">
+                                    <div class="card-body text-dark ">
+                                        <div id="carouselExample<?php echo $row['organization_forward_id'] ?>" class="carousel slide" data-bs-ride="carousel">
+                                            <!-- Collapsible Image Area -->
                                             <div class="img-area mb-4">
                                                 <div class="carousel-inner">
                                                     <?php $images = json_decode($row['organization_forward_img'], true); ?>
@@ -119,26 +131,39 @@ $result_4 = $con->query($sql_4);
                                                             <img src="placeholder.jpg" class="d-block w-100" alt="Placeholder Image">
                                                         </div>
                                                     <?php endif; ?>
+
                                                 </div>
+                                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample<?php echo $row['organization_forward_id'] ?>" data-bs-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">Previous</span>
+                                                </button>
+                                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample<?php echo $row['organization_forward_id'] ?>" data-bs-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">Next</span>
+                                                </button>
                                             </div>
-                                            <h3 class="card-title"><?php echo $row['organization_forward_name']; ?></h3>
-                                            <p class="lead"> <?php echo $row['organization_forward_detail'] ?>
-                                            </p>
                                         </div>
-                                        <div class="card-footer bg-transparent">
-                                            <a href="fw_detail.php?organization_forward_id=<?php echo $row['organization_forward_id'] ?>" class="btn bg-primary text-white rounded-pill">รายละเอียดเพิ่มเติม</a>
-                                        </div>
+
+                                        <h3 class="card-title"><?php echo htmlspecialchars($row['organization_forward_name']); ?></h3>
+                                        <p class="lead"><?php echo htmlspecialchars($row['organization_forward_detail']); ?></p>
                                     </div>
-                                    <br>
+                                    <div class="card-footer bg-transparent border-light">
+                                        <a href="fw_detail.php?organization_forward_id=<?php echo htmlspecialchars($row['organization_forward_id']); ?>" class="btn bg-primary text-white rounded-pill">รายละเอียดเพิ่มเติม</a>
+                                    </div>
                                 </div>
+                            </div>
 
-                            <?php } ?>
+                        <?php } ?>
 
-
+                        <div class="text-end">
+                            <br>
+                            <a href="../1page/post_2.php" type="button" class="btn btn-outline-info rounded-pill">
+                                ดูเพิ่มเติม
+                            </a>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </div>
         <br>
 

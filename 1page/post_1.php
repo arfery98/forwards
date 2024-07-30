@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 
 
 
-$sql = "SELECT * FROM `tb_personal_forward` WHERE personal_forward_status = 'Open'  ORDER BY personal_forward_time DESC LIMIT 0,3";
+$sql = "SELECT * FROM `tb_personal_forward` WHERE personal_forward_status = 'Open'  ORDER BY personal_forward_time DESC ";
 $result3 = $con->query($sql);
 
 
@@ -96,46 +96,70 @@ $result_4 = $con->query($sql_4);
         <br>
 
 
-        <div class="card" style="width: 80rem;"><!-- โพสต์ส่งต่อ -->
+        <div class="card" style="width: 80rem;"> <!-- โพสต์ส่งต่อ -->
             <div class="card-body">
                 <section class="portfolio section-padding" id="portfolio">
+                    <div class="text-center">
+                        <div class="row">
+                            <div class="text-center">
+                                <p class="fs-1"> ส่งต่อสิ่งของ </p>
+                                <p class="fs-3"> ใครมีของที่ไม่ใช้สามารถส่งต่อได้ </p>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
 
-                    <br>
 
                     <p class="fs-2">โพสต์บริจาคของบุคคลทั่วไป</p>
                     <br>
                     <div class="row">
                         <?php while ($row = mysqli_fetch_assoc($result3)) { ?>
-                            <br>
+
                             <div class="col-12 col-md-12 col-lg-4">
-                                <div class="card text-light text-center bg-white pb-2 " style="width: 25rem; height: auto;">
-                                    <div class="card-body text-dark">
-                                        <div class="img-area mb-4">
-                                            <div class="carousel-inner">
-                                                <?php $images = json_decode($row['personal_forward_img'], true); ?>
-                                                <?php if (is_array($images) && count($images) > 0) : ?>
-                                                    <?php foreach ($images as $index => $image) : ?>
-                                                        <div class="mx-auto" style="width: 300px;">
-                                                            <?php echo "<img alt='' class='img-thumbnail' src='../social/{$image}'>"; ?>
+                                <br>
+                                <div class="card text-light text-center bg-white pb-2" style="width: 25rem; height: auto;">
+                                    <div class="card-body text-dark ">
+
+                                        <div id="carouselExample<?php echo $row['personal_forward_id'] ?>" class="carousel slide" data-bs-ride="carousel">
+                                            <div class="img-area mb-4">
+                                                <div class="carousel-inner">
+                                                    <?php $images = json_decode($row['personal_forward_img'], true); ?>
+                                                    <?php if (is_array($images) && count($images) > 0) : ?>
+                                                        <?php foreach ($images as $index => $image) : ?>
+                                                            <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>" style="width: 300px;">
+                                                                <?php echo "<img src='../social/{$image}' alt='images' class='d-block w-100' >"; ?>
+                                                            </div>
+                                                        <?php endforeach; ?>
+                                                    <?php else : ?>
+                                                        <div class="carousel-item active">
+                                                            <img src="placeholder.jpg" class="d-block w-100" alt="Placeholder Image">
                                                         </div>
-                                                    <?php endforeach; ?>
-                                                <?php else : ?>
-                                                    <div class="carousel-item active">
-                                                        <img src="placeholder.jpg" class="d-block w-100" alt="Placeholder Image">
-                                                    </div>
-                                                <?php endif; ?>
+                                                    <?php endif; ?>
+
+                                                </div>
+                                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample<?php echo $row['personal_forward_id'] ?>" data-bs-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">Previous</span>
+                                                </button>
+                                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample<?php echo $row['personal_forward_id'] ?>" data-bs-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">Next</span>
+                                                </button>
                                             </div>
                                         </div>
                                         <h3 class="card-title"><?php echo $row['personal_forward_name']; ?></h3>
                                         <p class="lead"> <?php echo $row['personal_forward_detail'] ?>
                                         </p>
-                                    </div>
-                                    <div class="card-footer bg-transparent">
-                                        <a href="fw_detail.php?personal_forward_id=<?php echo $row['personal_forward_id'] ?>" class="btn bg-primary text-white rounded-pill">รายละเอียดเพิ่มเติม</a>
+
+                                        <div class="card-footer bg-transparent border-light">
+                                            <a href="fw_detail.php?personal_forward_id=<?php echo $row['personal_forward_id'] ?>" class="btn bg-primary text-white rounded-pill">รายละเอียดเพิ่มเติม</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         <?php } ?>
+
+
                     </div>
                 </section>
             </div>

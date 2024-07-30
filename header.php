@@ -1,4 +1,4 @@
-<header class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="../1page/index.php">
             <img src="../image/3.png" alt="" height="70" class="d-inline-block align-text-middle">
@@ -59,6 +59,11 @@
                                 ประชาสัมพันธ์
                             </a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link " href="../1page/check_get.php" role="button" aria-expanded="false">
+                                เช็คการบริจาค
+                            </a>
+                        </li>
 
                         <?php
                         include('../db_connect.php');
@@ -84,9 +89,10 @@
 
                 <div class="navbar-nav ms-auto mb-2 mb-lg-0">
 
-                
+
 
                     <?php if (isset($_SESSION['user_id'])) { ?>
+                        
                         <span class="navbar-text">
                             ยินดีต้องรับคุณ <?php echo $_SESSION['user_name']  . ' ' . $_SESSION['user_lastname']; ?> &nbsp;
                         </span><a href="../user/logout.php" class="btn btn-outline-secondary rounded-pill" type="submit">ออกจากระบบ</a>
@@ -101,4 +107,4 @@
                 </div>
         </div>
     </div>
-</header>
+</nav>

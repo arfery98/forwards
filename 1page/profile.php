@@ -20,7 +20,7 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <title>ข้อมูลส่วนตัว</title>
     <link rel="stylesheet" href="../font.css">
@@ -29,6 +29,17 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
 </head>
 
 <body style="background-color: #dfeefa;">
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasRightLabel">การแจ้งเตือน</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+
+        </div>
+    </div>
+
     <div class="container">
         <br>
         <div class="card" style="width: 80rem;">
@@ -39,28 +50,26 @@ $userData = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
 
-                    <?php if (isset($_SESSION['user_profile'])) { ?>
-                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" height="180" class="d-inline-block align-text-middle rounded-circle">
+                    <?php //if (isset($_SESSION['user_profile'])) { ?>
+                        <!-- <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" height="180" class="d-inline-block align-text-middle rounded-circle"> -->
 
-                        <?php  } else {
+                        <?php /* } else {
                         $images = json_decode($userData['user_profile'], true);
                         if (is_array($images)) {
-                            foreach ($images as $image) { ?>
-                                <?php echo "<img src='../user/{$image}' alt='' height='180' class='d-inline-block align-text-middle rounded-circle'>" ?>
-                        <?php }
-                        } ?>
-                    <?php  } ?>
+                            foreach ($images as $image) { */ ?>
+                                <?php // echo "<img src='../user/{$image}' alt='' height='180' class='d-inline-block align-text-middle rounded-circle'>" ?>
+                        <?php // } } ?>
+                    <?php // } ?>
 
-                    <?php //} 
-                    ?>
-
+                    
+    
 
                 </center>
-                <hr>
+                
                 <div class="row">
                     <div class="col">
                         <label for="formGroupExampleInput" class="form-label">เลขบัตรประจำตัวประชาชน</label>
-                        <input type="text" class="form-control" id="" value="<?php echo $userData['user_id']  ?>" disabled readonly>
+                        <input type="text" class="form-control" id="" value="<?php echo $userData['user_id'] ; ?>" disabled readonly>
                     </div>
                     <div class="col">
                         <label for="formGroupExampleInput" class="form-label">ชื่อ</label>

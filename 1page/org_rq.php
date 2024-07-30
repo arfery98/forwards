@@ -104,9 +104,9 @@ if (!isset($_SESSION['user_id'])) {
                                 <div class="row">
                                     <div class="text-center" align="center">
                                         <label>เลือกรูปภาพ</label>
-                                        <div id="display_image_div">
+                                        <!-- <div id="display_image_div">
                                             <img name="display_image_data" id="display_image_data" src="dummy-image.png" alt="Picture">
-                                        </div>
+                                        </div> -->
                                         <br>
                                         <input type="file" name="images[]" id="personal_forward_img" class="form-control" multiple accept="image/*" required>
                                     </div>
@@ -196,7 +196,7 @@ if (!isset($_SESSION['user_id'])) {
                             <br>
                             <hr>
                             <div class="text-center">
-                                <button type="submit" id="submitButton" class="btn btn-warning rounded-pill">โพสต์</button>
+                                <button type="submit" id="submitButton" class="btn btn-outline-info rounded-pill">โพสต์</button>
                             </div>
                     </form>
                     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

@@ -63,9 +63,9 @@ $user_orgData = $stmt->fetch(PDO::FETCH_ASSOC);
                         <div class="row">
                             <div class="text-center" align="center">
                                 <label>เลือกรูปภาพ</label>
-                                <div id="display_image_div">
+                                <!-- <div id="display_image_div">
                                     <img name="display_image_data" id="display_image_data" src="dummy-image.png" alt="Picture">
-                                </div>
+                                </div> -->
                                 <br>
                                 <input type="file" name="images[]" id="browse_image" class="form-control" multiple accept="image/*">
                             </div>

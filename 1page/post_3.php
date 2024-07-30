@@ -16,7 +16,7 @@ $result3 = $con->query($sql);
 $sql2 = "SELECT * FROM `tb_organization_forwards` WHERE organization_forward_status = 'Open'  ORDER BY organization_forward_time DESC LIMIT 0,3";
 $result2 = $con->query($sql2);
 
-$sql_3 = "SELECT * FROM `tb_org_rq` WHERE org_rq_status = 'No_forwards' ORDER BY org_rq_time DESC LIMIT 0,3";
+$sql_3 = "SELECT * FROM `tb_org_rq` WHERE org_rq_status = 'No_forwards' ORDER BY org_rq_time DESC ";
 $result_3 = $con->query($sql_3);
 
 $sql_4 = "SELECT * FROM `tb_organization` WHERE organization_verify = 'IP' LIMIT 0,3 ";
@@ -104,37 +104,40 @@ $result_4 = $con->query($sql_4);
                     <br>
                     <div class="row">
                         <?php while ($row = mysqli_fetch_assoc($result_3)) { ?>
-                            <br>
+
                             <div class="col-12 col-md-12 col-lg-4">
+                                <br>
                                 <div class="card text-light text-center bg-white pb-2 " style="width: 25rem; height: auto;">
                                     <div class="card-body text-dark">
-                                        <div class="img-area mb-4">
-                                            <div class="carousel-inner">
-                                                <?php $images = json_decode($row['org_rq_img'], true); ?>
-                                                <?php if (is_array($images) && count($images) > 0) : ?>
-                                                    <?php foreach ($images as $index => $image) : ?>
-                                                        <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>" style="width: 300px;">
-                                                            <?php echo "<img src='../social/{$image}' class='d-block w-100' alt='images'>"; ?>
+                                        <div id="carouselExample<?php echo $row['org_rq_id'] ?>" class="carousel slide" data-bs-ride="carousel">
+                                            <div class="img-area mb-4">
+                                                <div class="carousel-inner">
+                                                    <?php $images = json_decode($row['org_rq_img'], true); ?>
+                                                    <?php if (is_array($images) && count($images) > 0) : ?>
+                                                        <?php foreach ($images as $index => $image) : ?>
+                                                            <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>" style="width: 300px;">
+                                                                <?php echo "<img src='../social/{$image}' class='d-block w-100' alt='images'>"; ?>
+                                                            </div>
+                                                        <?php endforeach; ?>
+                                                    <?php else : ?>
+                                                        <div class="carousel-item active">
+                                                            <img src="placeholder.jpg" class="d-block w-100" alt="Placeholder Image">
                                                         </div>
-                                                    <?php endforeach; ?>
-                                                <?php else : ?>
-                                                    <div class="carousel-item active">
-                                                        <img src="placeholder.jpg" class="d-block w-100" alt="Placeholder Image">
-                                                    </div>
-                                                <?php endif; ?>
+                                                    <?php endif; ?>
+                                                </div>
+                                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample<?php echo $row['org_rq_id'] ?>" data-bs-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">Previous</span>
+                                                </button>
+                                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample<?php echo $row['org_rq_id'] ?>" data-bs-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">Next</span>
+                                                </button>
                                             </div>
-                                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Previous</span>
-                                            </button>
-                                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Next</span>
-                                            </button>
+                                            <h3 class="card-title"><?php echo $row['org_rq_name']; ?></h3>
+                                            <p class="lead"> <?php echo $row['org_rq_detail'] ?>
+                                            </p>
                                         </div>
-                                        <h3 class="card-title"><?php echo $row['org_rq_name']; ?></h3>
-                                        <p class="lead"> <?php echo $row['org_rq_detail'] ?>
-                                        </p>
                                     </div>
                                     <div class="card-footer bg-transparent border-light">
                                         <a href="fw_detail.php?org_rq_id=<?php echo $row['org_rq_id'] ?>" class="btn bg-primary text-white rounded-pill">รายละเอียดเพิ่มเติม</a>
