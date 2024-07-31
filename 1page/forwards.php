@@ -146,29 +146,29 @@ if (!isset($_SESSION['user_id'])) {
                         <div class="row">
                             <div class="col">
                                 <label for="formGroupExampleInput" class="form-label">บ้านเลขที่</label>
-                                <input type="text" class="form-control" id="no" name="no" value="">
+                                <input type="text" class="form-control" id="no" name="no" value="" required>
                             </div>
                             <div class="col">
                                 <label for="formGroupExampleInput" class="form-label">หมู่บ้าน</label>
-                                <input type="text" class="form-control" id="village" name="village" value="">
+                                <input type="text" class="form-control" id="village" name="village" value="" placeholder="ถ้าไม่มีใส่ -">
                             </div>
                             <div class="col">
                                 <label for="formGroupExampleInput" class="form-label">หมู่ที่</label>
-                                <input type="text" class="form-control" id="groubs" name="groubs" value="">
+                                <input type="text" class="form-control" id="groubs" name="groubs" value="" placeholder="ถ้าไม่มีใส่ -">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
                                 <label for="formGroupExampleInput" class="form-label">อาคาร</label>
-                                <input type="text" class="form-control" id="buildings" name="buildings" value="">
+                                <input type="text" class="form-control" id="buildings" name="buildings" value="" placeholder="ถ้าไม่มีใส่ -">
                             </div>
                             <div class="col">
                                 <label for="formGroupExampleInput" class="form-label">ตรอก/ซอย</label value="">
-                                <input type="text" class="form-control" id="alleys" name="alleys">
+                                <input type="text" class="form-control" id="alleys" name="alleys" placeholder="ถ้าไม่มีใส่ -">
                             </div>
                             <div class="col">
                                 <label for="formGroupExampleInput" class="form-label">ถนน</label>
-                                <input type="text" class="form-control" id="roads" name="roads" value="">
+                                <input type="text" class="form-control" id="roads" name="roads" placeholder="ถ้าไม่มีใส่ -" value="">
                             </div>
                         </div>
 

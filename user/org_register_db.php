@@ -9,6 +9,7 @@ if (isset($_POST['org_register'])) {
     $organization_password = $_POST['organization_password'];
     $confirm_password = $_POST['confirm_password'];
     $organization_phone = $_POST['organization_phone'];
+    $organization_verify = 'CIP';
 
     //print_r($_POST);
     //$organization_img = $_POST['organization_img'];
@@ -27,7 +28,7 @@ if (isset($_POST['org_register'])) {
 
 if (!filter_var($organization_email, FILTER_VALIDATE_EMAIL)) {
     $_SESSION['error'] = "กรุณากรอกอีเมลที่ถูกต้อง";
-    header("Location: register.php");
+    header("Location: ../1page/org_register.php");
 } else if (strlen($organization_password) < $min_length) {
     $_SESSION['error'] = "รหัสผ่านต้องมีความยาวมากกว่า 6 ตัวอักษร";
     header("Location: ../1page/org_register.php");
@@ -53,19 +54,18 @@ if (!filter_var($organization_email, FILTER_VALIDATE_EMAIL)) {
         $hash_password = password_hash($organization_password, PASSWORD_DEFAULT);
 
         try {
-            $organization_verify = 'CIP';
+
             $stmt = $conn->prepare("INSERT INTO tb_organization(organization_name, organization_email, organization_password, organization_phone, organization_verify) VALUES (?, ?, ?, ?, ?)");
             $stmt->execute([$organization_name, $organization_email, $hash_password, $organization_phone, $organization_verify]);
-            
+
             //$_SESSION['success'] = "ลงทะเบียนสำเร็จ";
             header("Location: ../1page/org_login.php");
             exit();
         } catch (PDOException $e) {
             $_SESSION['error'] = "มีข้อผิดพลาด"; //. $e->getMessage();
             //echo "Error: " . $e->getMessage();
-            header("Location: ../1page/org_register.php?");
+            header("Location: ../1page/org_register.php");
             exit();
         }
     }
 }
- 
