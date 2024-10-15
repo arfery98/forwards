@@ -59,7 +59,7 @@ if (isset($_GET['org_rq_id'])) {
                                     <?php if (is_array($images) && count($images) > 0) : ?>
                                         <?php foreach ($images as $index => $image) : ?>
                                             <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
-                                                <?php echo "<img src='../social/{$image}' class='d-block w-100' alt='images'>"; ?>
+                                                <?php echo "<img src='../social/{$image}' class='d-block w-100' alt='images' width='1280' height='720'>"; ?>
 
                                             </div>
                                         <?php endforeach; ?>
@@ -197,7 +197,7 @@ if (isset($_GET['org_rq_id'])) {
                                     <?php if (is_array($images) && count($images) > 0) : ?>
                                         <?php foreach ($images as $index => $image) : ?>
                                             <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
-                                                <?php echo "<img src='../social/{$image}' class='d-block w-100' alt='images'>"; ?>
+                                                <?php echo "<img src='../social/{$image}' class='d-block w-100' alt='images' >"; ?>
                                             </div>
                                         <?php endforeach; ?>
                                     <?php else : ?>

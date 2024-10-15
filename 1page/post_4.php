@@ -22,7 +22,7 @@ $result_3 = $con->query($sql_3);
 $sql_4 = "SELECT * FROM `tb_organization` WHERE organization_verify = 'IP' ";
 $result_4 = $con->query($sql_4);
 
-$sql_5 = "SELECT * FROM `tb_user_declares` ORDER BY `declares_time` DESC";
+$sql_5 = "SELECT tb_user_declares.*,tb_users.user_name,tb_users.user_lastname FROM tb_user_declares,tb_users WHERE tb_users.user_id = tb_user_declares.declares_user ORDER BY `declares_time` DESC";
 $result_5 = $con->query($sql_5);
 
 ?>
@@ -138,7 +138,7 @@ $result_5 = $con->query($sql_5);
                                                 </button>
                                             </div>
                                         </div>
-                                        <h3 class="card-title"><?php echo $row['declares_user']; ?></h3>
+                                        <h3 class="card-title"><?php echo $row['user_name']; ?> &nabla;<?php echo $row['user_lastname']; ?> </h3>
                                         <p class="lead"> <?php echo $row['declares_message'] ?>
                                         </p>
                                     </div>

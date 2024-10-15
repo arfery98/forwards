@@ -6,7 +6,6 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: ../1page/login.php");
 }
 
-
 $stmt = $conn->prepare("SELECT * FROM tb_users WHERE user_id = :user_id");
 $stmt->bindParam(":user_id", $_SESSION['user_id']);
 $stmt->execute();
